@@ -84,7 +84,7 @@ module.exports = function (){
       dc: 'http://purl.org/dc/elements/1.1/#',
       xml: 'http://www.w3.org/XML/1998/namespace',
       wd: 'http://www.wikidata.org/entity/',
-      wdt: 'http://www.wikidata.org/prop/direct/'
+      wdt: 'http://www.wikidata.org/wiki/Property:'
     };
   
   options.clearMetaObject = function (){
