@@ -1,0 +1,2795 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="author"
+      content="Megha Jayakumar, Dr.Abderrahmane Khiat, Ahmad Hemid"
+    />
+    <meta
+      name="keywords"
+      content="KGraphX, vowl, visual notation, web ontology language, owl, rdf, ontology visualization, ontologies, semantic web"
+    />
+    <meta
+      name="description"
+      content="KGraphX - Web-based Visualization of Ontologies"
+    />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/webvowl.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/> -->
+    <link rel="stylesheet" type="text/css" href="css/webvowl.app.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto";
+      }
+
+      button {
+        background-color: cornflowerblue;
+        color: white;
+        border-radius: 5px;
+      }
+      .loader {
+        border: 4px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 4px solid #3498db;
+        width: 30px;
+        height: 30px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+      }
+
+      /* Safari */
+      @-webkit-keyframes spin {
+        0% {
+          -webkit-transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <style>
+      .class-inner {
+        margin: 3px;
+        border-style: dashed;
+        border-color: beige;
+        cursor: pointer;
+      }
+
+      .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0); /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+      }
+
+      /* Modal Content */
+      .modal-content {	
+        height: 400px;	
+        overflow-y: scroll;	
+        position: relative;	
+        background-color: #fefefe;	
+        margin: auto;	
+        padding: 0;	
+        border: 1px solid #888;	
+        width: 40%;	
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),	
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);	
+        -webkit-animation-name: animatetop;	
+        -webkit-animation-duration: 0.4s;	
+        animation-name: animatetop;	
+        animation-duration: 0.4s;	
+      }
+      /* Add Animation */
+      @-webkit-keyframes animatetop {
+        from {
+          top: -300px;
+          opacity: 0;
+        }
+        to {
+          top: 0;
+          opacity: 1;
+        }
+      }
+
+      @keyframes animatetop {
+        from {
+          top: -300px;
+          opacity: 0;
+        }
+        to {
+          top: 0;
+          opacity: 1;
+        }
+      }
+
+      /* The Close Button */
+      .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .modal-header {	
+        padding: 2px 16px;	
+        background-color: rgb(113, 155, 211);	
+        color: white;	
+      }
+
+      .modal-body {
+        padding: 2px 16px;
+      }
+
+      .modal-footer {
+        padding: 2px 16px;
+        background-color: #fff;
+        color: white;
+      }
+    </style>
+    <style>
+      /* End Reset */
+
+      /* Default Font Styles
+______________________*/
+      .section-wrap {	
+        width: 100%;	
+        font-family: "Open Sans", sans-serif;	
+      }
+      .section-wrap .section {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+      .section-wrap .top-section {
+        border-bottom: 1px solid #34495e;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .section-wrap .top-section a {
+        color: #69c;
+        font-size: 14px;
+      }
+      .section-wrap .top-section a:hover {
+        color: #007bff;
+      }
+      .section-wrap .heading-section {
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      .section-wrap .heading-section h2 {
+        font-size: 18px;
+      }
+      .section-wrap .img-wrap {
+        padding-bottom: 10px;
+        border-bottom: 2px solid #fff;
+        margin-bottom: 15px;
+      }
+      .section-wrap .img-wrap img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .section-wrap .tab-label {
+        font-weight: bold;
+        padding-bottom: 10px;
+        display: block;
+        cursor: pointer;
+      }
+      .section-wrap .tab-label em {
+        font-style: normal;
+        float: left;
+        width: 80%;
+        font-size: 16px;
+      }
+      .section-wrap .tab-label span {
+        text-align: right;
+        float: right;
+        width: 15%;
+        font-size: 16px;
+      }
+      .section-wrap-prop .tab-content {
+        display: none;
+      }
+      .section-wrap .tab-content {
+        display: none;
+      }
+      .datatype-content ul {
+        padding: 0;
+      }
+      .datatype-content li {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        list-style: none;
+      }
+      .datatype-content .data-heading {
+        display: inline-block;
+        cursor: pointer;
+      }
+      .datatype-content .data-heading span {
+        display: block;
+        padding: 3px 10px;
+        border: 2px solid #9467bd;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 13px;
+      }
+      .datatype-content .data-text {
+        display: inline-block;
+      }
+      .datatype-content .data-text span {
+        font-style: normal;
+        font-size: 13px;
+      }
+      .datatype-content .data-text span::before {
+        content: ":";
+        margin-right: 5px;
+      }
+      .datatype-content.block-li .data-heading {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      .datatype-content.block-li .data-text {
+        display: block;
+        text-align: center;
+      }
+      .datatype-content.block-li .data-text a {
+        color: #bdc3c7;
+      }
+      .datatype-content.block-li .data-text span::before {
+        content: "";
+        margin-right: 0;
+      }
+      .tabs-wrap .tab {
+        margin-bottom: 20px;
+      }
+      .tabs-wrap .tabs .tab:last-child {
+        margin-bottom: 0;
+      }
+      .innertab {
+        padding: 5px;
+        margin-bottom: 5px;
+      }
+      .innertab label {
+        display: block;
+        font-weight: bold;
+        cursor: pointer;
+        border: 2px solid #2e855e;
+        font-size: 14px;
+        border-radius: 2px;
+        padding: 5px;
+        color: black !important;
+        position: relative;
+      }
+      .innertab label::after {
+        content: "V";
+        /* background: url(images/down.png) no-repeat center center; */
+        background-size: 100% auto;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 999;
+        width: 15px;
+        height: 15px;
+      }
+      .innertab label.active::after {
+        content: "^";
+        background: url(images/up.png) no-repeat center center;
+        background-size: 100% auto;
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        z-index: 999;
+        width: 15px;
+        height: 15px;
+      }
+      .innertab .tab-content {
+        padding: 10px 10px 0 10px;
+      }
+      .innertab .tags-content {
+        text-align: center;
+      }
+      .innertab .tags-content span {
+        display: inline-block;
+        padding: 3px 10px;
+        border: 2px solid #9467bd;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        font-weight: bold;
+        text-align: center;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .object-content ul {
+        padding: 0;
+      }
+      .object-content li {
+        list-style: none;
+      }
+      /* Accordion styles */
+
+      .clearfix:after {
+        clear: both;
+        content: " ";
+        display: block;
+        font-size: 0;
+        line-height: 0;
+        visibility: hidden;
+        width: 0;
+        height: 0;
+      }
+    </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>KGraphX</title>
+  </head>
+  <body>
+    <main>
+      <section id="canvasArea" ondragover="allowDrop(event)">
+        <div id="browserCheck" class="hidden">
+          KGraphX does not work properly in Internet Explorer and Microsoft
+          Edge. Please use another browser, such as
+          <a href="http://www.mozilla.org/firefox/">Mozilla Firefox</a>
+          or
+          <a href="https://www.google.com/chrome/">Google Chrome</a>, to run
+          KGraphX.
+          <label id="killWarning">Hide warning</label>
+        </div>
+        <!-- build:process -->
+        <div id="logo" class="noselect">
+          <h2>
+            KGraphX <br />
+            <span>1.0</span>
+          </h2>
+        </div>
+        <!-- /build -->
+
+        <div id="loading-info" class="hidden">
+          <div id="loading-progress" style="border-radius: 10px;">
+            <div class="hidden">Loading ontology...</div>
+            <div
+              id="layoutLoadingProgressBarContainer"
+              style="
+                padding-bottom: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              "
+            >
+              <h4
+                id="currentLoadingStep"
+                style="
+                  margin: 0;
+                  font-style: italic;
+                  padding-bottom: 0;
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+              >
+                Layout optimization
+              </h4>
+              <div id="progressBarContext">
+                <div id="progressBarValue" class="busyProgressBar"></div>
+              </div>
+            </div>
+            <div
+              id="loadingInfo_msgBox"
+              style="padding-bottom: 0; padding-top: 0;"
+            >
+              <div
+                id="show-loadingInfo-button"
+                class="accordion-trigger noselect"
+              >
+                Details
+              </div>
+              <div id="loadingInfo-container">
+                <ul id="bulletPoint_container"></ul>
+              </div>
+            </div>
+            <div>
+              <span id="loadingIndicator_closeButton" class=""
+                >Close Warning</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div id="additionalInformationContainer">
+          <div id="reloadCachedOntology" class="hidden" title="">
+            <svg
+              viewBox="38 -12.5 18 18"
+              class="reloadCachedOntologyIcon btn_shadowed"
+              id="reloadSvgIcon"
+            >
+              <g>
+                <text
+                  id="svgStringText"
+                  dx="5px"
+                  dy="-1px"
+                  style="font-size: 9px;"
+                >
+                  Reload ontology
+                </text>
+                <path
+                  style="fill: #444; stroke-width: 0;"
+                  d="m 42.277542,5.1367119 c -5.405,0 -10.444,1.577 -14.699,4.282 l -5.75,-5.75 0,16.1100001 16.11,0 -6.395,-6.395 c 3.18,-1.787 6.834,-2.82 10.734,-2.82 12.171,0 22.073,9.902 22.073,22.074 0,2.899 -0.577,5.664 -1.599,8.202 l 4.738,2.762 c 1.47,-3.363 2.288,-7.068 2.288,-10.964 0,-15.164 -12.337,-27.5010001 -27.5,-27.5010001 m 11.5,46.7460001 c -3.179,1.786 -6.826,2.827 -10.726,2.827 -12.171,0 -22.073,-9.902 -22.073,-22.073 0,-2.739 0.524,-5.35 1.439,-7.771 l -4.731,-2.851 c -1.375,3.271 -2.136,6.858 -2.136,10.622 0,15.164 12.336,27.5 27.5,27.5 5.406,0 10.434,-1.584 14.691,-4.289 l 5.758,5.759 0,-16.112 -16.111,0 6.389,6.388 z"
+                  transform="matrix(0.20,0,0,0.20,75,-10)"
+                ></path>
+              </g>
+            </svg>
+            <span
+              id="reloadCachedOntologyString"
+              class="noselect"
+              style="font-style: italic; font-size: 10px;"
+              >Loaded cached ontology</span
+            >
+          </div>
+
+          <div id="FPS_Statistics" class="hidden debugOption">
+            FPS: 0<br />Nodes: 0<br />Links: 0
+          </div>
+          <span class="hidden debugOption" id="modeOfOperationString"
+            >mode of operation</span
+          >
+        </div>
+
+        <div id="graph"></div>
+
+        <div id="dragDropContainer" class="hidden">
+          <div id="drag_dropOverlay"></div>
+
+          <div id="drag_msg">
+            <svg
+              id="drag_svg"
+              style="
+                position: absolute;
+                left: 25%;
+                top: 25%;
+                width: 50%;
+                height: 50%;
+              "
+            >
+              <g id="drag_icon_group">
+                <path
+                  id="drag_icon"
+                  style="fill: #444; stroke-width: 0;"
+                  d="m 9.0000002,-8.9899999 -18.0000001,0 c -1.1000001,0 -1.9999991,0.9 -1.9999991,2 l 0,3.99 1.9999991,0 0,-4.01 18.0000001,0 0,14.0299996 -18.0000001,0 0,-4.02 -1.9999991,0 0,4.01 c 0,1.1 0.899999,1.98 1.9999991,1.98 l 18.0000001,0 c 1.1000008,0 2.0000008,-0.88 2.0000008,-1.98 l 0,-13.9999996 c 0,-1.11 -0.9,-2 -2.0000008,-2 z M -1,3.9999997 3.0000001,-3.3898305e-7 -1,-3.9999999 l 0,2.9999996 -9.999999,0 0,1.99999996 9.999999,0 0,3.00000004 z"
+                  transform="matrix(5.0,0,0,5.0,0,0)"
+                ></path>
+                <path
+                  id="drag_icon_drop"
+                  class="hidden"
+                  style="fill: #444; stroke-width: 0;"
+                  d="m 8.9900008,8.9999991 0,-18.0000001 c 0,-1.1 -0.9,-1.999999 -2,-1.999999 l -3.99,0 0,1.999999 4.01,0 0,18.0000001 -14.0299996,0 0,-18.0000001 4.02,0 0,-1.999999 -4.01,0 c -1.1,0 -1.98,0.899999 -1.98,1.999999 l 0,18.0000001 c 0,1.1000009 0.88,2.0000009 1.98,2.0000009 l 13.9999996,0 c 1.11,0 2,-0.9 2,-2.0000009 z M -3.9999988,-1.0000011 1.2389831e-6,2.999999 4.0000008,-1.0000011 l -2.9999996,0 0,-9.9999989 -1.99999996,0 0,9.9999989 -3.00000004,0 z"
+                  transform="matrix(5.0,0,0,5.0,0,0)"
+                ></path>
+              </g>
+            </svg>
+            <span id="drag_msg_text" style="font-size: 14px;"
+              >Drag ontology file here.</span
+            >
+          </div>
+        </div>
+        <div class="noselect">
+          <span id="leftSideBarCollapseButton" class="btn_shadowed hidden">
+            >
+          </span>
+        </div>
+        <div class="noselect">
+          <span id="sidebarExpandButton" class="btn_shadowed"> > </span>
+        </div>
+
+        <div id="containerForLeftSideBar">
+          <div id="leftSideBar">
+            <!--  -->
+            <div id="leftSideBarContent" class="hidden">
+              <!-- Dropdown section not in use currently -->
+               <h2 id="leftHeader">Data Store</h2>
+
+              <select
+                id="wikidata"
+                class="dropdownMenuClass"
+                style="width: 100%; float: none;"
+              >
+                <option>Wikidata </option>
+                <option>Bioportal </option>
+              </select>
+
+              <h2 id="leftHeader">Elements</h2>
+              <h3
+                class="selectedDefaultElement accordion-trigger noselect accordion-trigger-active"
+                id="defaultClass"
+                title="owl:Class"
+              >
+                Resource: 
+              </h3>
+              <div id="classContainer" class="accordion-container"></div>
+              <h3
+                class="selectedDefaultElement accordion-trigger noselect accordion-trigger-active"
+                title="owl:objectProperty"
+                id="defaultProperty"
+              >
+                Property: 
+              </h3>
+              <div id="propertyContainer" class="accordion-container"></div>
+              <h3
+                class="selectedDefaultElement accordion-trigger noselect accordion-trigger-active"
+                title="xsd:boolean"
+                id="defaultDatatype"
+              >
+                Datatype: 
+              </h3>
+              <div id="datatypeContainer" class="accordion-container"></div>
+            </div>
+          </div>
+        </div>
+        <div id="menuContainer">
+          <!--Ontology Menu-->
+          <ul id="m_select" class="toolTipMenu noselect" style="display: none;">
+            <li>
+              <a href="#foaf" id="foaf">Friend of a Friend (FOAF) vocabulary</a>
+            </li>
+            <li>
+              <a href="#goodrelations" id="goodrelations"
+                >GoodRelations Vocabulary for E-Commerce</a
+              >
+            </li>
+            <li>
+              <a href="#muto" id="muto"
+                >Modular and Unified Tagging Ontology (MUTO)</a
+              >
+            </li>
+            <li>
+              <a href="#ontovibe" id="ontovibe"
+                >Ontology Visualization Benchmark (OntoViBe)</a
+              >
+            </li>
+            <li>
+              <a href="#personasonto" id="personasonto"
+                >Personas Ontology (PersonasOnto)</a
+              >
+            </li>
+            <li>
+              <a href="#sioc" id="sioc"
+                >SIOC (Semantically-Interlinked Online Communities) Core
+                Ontology</a
+              >
+            </li>
+
+            <!-- build:remove release-->
+            <li>
+              <a href="#benchmark" id="benchmark">Benchmark Graph for VOWL</a>
+            </li>
+            <!-- /build -->
+            <li class="option" id="converter-option">
+              <form class="converter-form" id="iri-converter-form">
+                <label for="iri-converter-input">Custom Ontology:</label>
+
+                <input
+                  type="text"
+                  id="iri-converter-input"
+                  placeholder="Enter ontology IRI"
+                />
+                <button type="submit" id="iri-converter-button" disabled>
+                  Visualize
+                </button>
+              </form>
+              <div class="converter-form">
+                <input
+                  class="hidden"
+                  type="file"
+                  id="file-converter-input"
+                  autocomplete="off"
+                />
+                <label
+                  class="truncate"
+                  id="file-converter-label"
+                  for="file-converter-input"
+                  >Select ontology file</label
+                >
+                <button type="submit" id="file-converter-button" disabled>
+                  Upload
+                </button>
+              </div>
+              <div id="emptyContainer">
+                <a
+                  href="#opts=editorMode=true;#new_ontology1"
+                  id="empty"
+                  style="pointer-events: none; padding-left: 0;"
+                  >Create new ontology</a
+                >
+              </div>
+              <div>
+                <!--<button class="debugOption" type="submit" id="direct-text-input">-->
+                <!--Direct input-->
+                <!--</button>-->
+              </div>
+            </li>
+          </ul>
+          <!--Export Menu-->
+          <ul id="m_export" class="toolTipMenu noselect">
+            <li><a href="#" download id="exportTurtle">Export as RDF</a></li>	 
+            <li><a href="#" download id="exportTurtleRDF">Export as RDF-S</a></li>
+            <li><a href="#" id="saveToFuseki">Upload TTL file to Fuseki</a></li>
+            <input
+            style="margin: 3%;"
+            type="text"
+            id="Dataset-name"
+            placeholder="Enter Dataset name"
+             />
+            <input id='fileid' type='file' hidden />
+            <li><a href="#" id="currentToFuseki">Upload current graph to Fuseki</a></li>
+            <input
+            style="margin: 3%;"
+            type="text"
+            id="Dataset-name-curr"
+            placeholder="Enter Dataset name"
+            />
+          </ul>
+          <!--Filter Menu-->
+          <ul id="m_filter" class="toolTipMenu noselect">
+            <li class="toggleOption" id="datatypeFilteringOption"></li>
+            <li class="toggleOption" id="objectPropertyFilteringOption"></li>
+            <li class="toggleOption" id="subclassFilteringOption"></li>
+            <li class="toggleOption" id="disjointFilteringOption"></li>
+            <li class="toggleOption" id="setOperatorFilteringOption"></li>
+            <li class="slideOption" id="nodeDegreeFilteringOption"></li>
+          </ul>
+          <!--Options Menu -->
+          <ul id="m_config" class="toolTipMenu noselect">
+            <li class="toggleOption" id="zoomSliderOption"></li>
+
+            <li class="slideOption" id="classSliderOption"></li>
+            <li class="slideOption" id="datatypeSliderOption"></li>
+            <li class="toggleOption" id="dynamicLabelWidth"></li>
+            <li class="slideOption" id="maxLabelWidthSliderOption"></li>
+            <li class="toggleOption" id="nodeScalingOption"></li>
+            <li class="toggleOption" id="compactNotationOption"></li>
+            <li class="toggleOption" id="colorExternalsOption"></li>
+          </ul>
+          <!--Modes Menu -->
+          <ul id="m_modes" class="toolTipMenu noselect">
+            <li class="toggleOption" id="editMode"></li>
+            <li class="toggleOption" id="pickAndPinOption"></li>
+          </ul>
+
+          <!--Debug Menu -->
+          <ul id="m_debug" class="toolTipMenu noselect">
+            <li class="toggleOption" id="useAccuracyHelper"></li>
+            <li class="toggleOption" id="showDraggerObject"></li>
+            <li class="toggleOption" id="showFPS_Statistics"></li>
+            <li class="toggleOption" id="showModeOfOperation"></li>
+          </ul>
+
+          <!--About Menu-->
+          <ul id="m_about" class="toolTipMenu">
+            <li>
+              <a href="license.txt" target="_blank"
+                >Base - MIT License &copy; 2014-2019</a
+              >
+            </li>
+            <li>
+              KGraphX Contibutors : 
+              Megha Jayakumar, Dr.Abderrahmane Khiat, Ahmad Hemid
+            </li>
+          </ul>
+          <ul id="m_search" class="toolTipMenu"></ul>
+        </div>
+        <div class="noselect" id="swipeBarContainer">
+          <ul id="menuElementContainer">
+            <li class="hidden" id="c_search" class="inner-addon left-addon">
+              <i class="searchIcon">
+                <svg
+                  viewBox="0 0 24 24"
+                  height="100%"
+                  width="100%"
+                  style="pointer-events: none; display: block;"
+                >
+                  <g>
+                    <path
+                      id="magnifyingGlass"
+                      style="fill: #666; stroke-width: 0;"
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    ></path>
+                  </g>
+                </svg>
+              </i>
+              <input
+                class="searchInputText"
+                type="text"
+                id="search-input-text"
+                placeholder="Search"
+              />
+            </li>
+            <li class="hidden" id="c_locate">
+              <a
+                style="padding: 0 8px 5px 8px;"
+                draggable="false"
+                title="Nothing to locate, enter search term."
+                href="#"
+                id="locateSearchResult"
+                >&#8982;
+              </a>
+            </li>
+            <li id="c_select" class="hidden">
+              <a draggable="false" href="#">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="M3 15h18v-2H3v2zm0 4h18v-2H3v2zm0-8h18V9H3v2zm0-6v2h18V5H3z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg>
+                </i>
+                Ontology</a
+              >
+            </li>
+            <li id="c_export">
+              <a draggable="false" href="#"> Export/Save</a>
+            </li>
+            <li class="hidden" id="c_filter">
+              <a draggable="false" href="#">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="M3 4l9 16 9-16H3zm3.38 2h11.25L12 16 6.38 6z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg> </i
+                >Filter</a
+              >
+            </li>
+            <li class="hidden" id="c_config">
+              <a draggable="false" href="#">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="m 21.163138,13.127428 0,-2.356764 -2.546629,-0.424622 C 18.439272,9.5807939 18.137791,8.8661419 17.733863,8.218291 L 19.2356,6.116978 17.569296,4.450673 15.466841,5.951269 C 14.818953,5.548483 14.104338,5.24586 13.33909,5.067482 l -0.424622,-2.545488 -2.356764,0 -0.424622,2.545488 C 9.3689769,5.24586 8.6531829,5.548519 8.0053319,5.951269 l -2.102455,-1.500596 -1.666304,1.666305 1.501737,2.101313 c -0.403928,0.6467469 -0.705409,1.3625029 -0.882646,2.127751 l -2.546629,0.424622 0,2.356764 2.546629,0.424622 c 0.177237,0.765248 0.478718,1.4799 0.882646,2.127751 l -1.501737,2.102455 1.666304,1.666304 2.103596,-1.501737 c 0.646747,0.403928 1.362504,0.705409 2.1266091,0.882646 l 0.424622,2.546629 2.356764,0 0.424622,-2.546629 c 0.764106,-0.177237 1.4799,-0.478718 2.127751,-0.882646 l 2.102455,1.501737 1.666304,-1.666304 -1.501737,-2.102455 c 0.403928,-0.647888 0.705409,-1.363645 0.882646,-2.127751 l 2.546629,-0.424622 z m -9.427053,3.535144 c -2.6030431,0 -4.7135241,-2.110517 -4.7135241,-4.713527 0,-2.6030071 2.110518,-4.713525 4.7135241,-4.713525 2.60301,0 4.713527,2.1105179 4.713527,4.713525 0,2.60301 -2.110481,4.713527 -4.713527,4.713527 z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg> </i
+                >Options</a
+              >
+            </li>
+            <li class="hidden" id="c_modes">
+              <a draggable="false" href="#">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="M22 9.24l-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg> </i
+                >Modes</a
+              >
+            </li>
+            <li class="hidden" id="c_reset">
+              <a draggable="false" id="reset-button" href="#" type="reset">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="m 12,5 0,-4 5,5 -5,5 0,-4 c -3.31,0 -6,2.69 -6,6 0,3.31 2.69,6 6,6 3.31,0 6,-2.69 6,-6 l 2,0 c 0,4.42 -3.58,8 -8,8 C 7.58,21 4,17.42 4,13 4,8.58 7.58,5 12,5 Z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg> </i
+                >Reset</a
+              >
+            </li>
+            <li id="c_pause">
+              <a
+                draggable="false"
+                id="pause-button"
+                href="#"
+                style="padding: 9px 8px 12px 8px;"
+                >Pause</a
+              >
+            </li>
+            <li class="hidden" id="c_debug" class="debugOption">
+              <a id="debugMenuHref" draggable="false" href="#">
+                <i>
+                  <svg viewBox="0 0 24 24" class="menuElementSvgElement">
+                    <g>
+                      <path
+                        style="fill: #fff; stroke-width: 0;"
+                        d="M 20,8 17.19,8 C 16.74,7.22 16.12,6.55 15.37,6.04 L 17,4.41 15.59,3 13.42,5.17 C 12.96,5.06 12.49,5 12,5 11.51,5 11.04,5.06 10.59,5.17 L 8.41,3 7,4.41 8.62,6.04 C 7.88,6.55 7.26,7.22 6.81,8 L 4,8 4,10 6.09,10 C 6.04,10.33 6,10.66 6,11 l 0,1 -2,0 0,2 2,0 0,1 c 0,0.34 0.04,0.67 0.09,1 L 4,16 l 0,2 2.81,0 c 1.04,1.79 2.97,3 5.19,3 2.22,0 4.15,-1.21 5.19,-3 l 2.81,0 0,-2 -2.09,0 C 17.96,15.67 18,15.34 18,15 l 0,-1 2,0 0,-2 -2,0 0,-1 c 0,-0.34 -0.04,-0.67 -0.09,-1 L 20,10 Z m -4,4 0,3 c 0,0.22 -0.03,0.47 -0.07,0.7 L 15.83,16.35 15.46,17 C 14.74,18.24 13.42,19 12,19 10.58,19 9.26,18.23 8.54,17 L 8.17,16.36 8.07,15.71 C 8.03,15.47 8,15.22 8,15 L 8,11 C 8,10.78 8.03,10.53 8.07,10.3 L 8.17,9.65 8.54,9 C 8.84,8.48 9.26,8.03 9.75,7.69 L 10.32,7.3 11.06,7.12 C 11.37,7.04 11.69,7 12,7 c 0.32,0 0.63,0.04 0.95,0.12 l 0.68,0.16 0.61,0.42 c 0.5,0.34 0.91,0.78 1.21,1.31 l 0.38,0.65 0.1,0.65 C 15.97,10.53 16,10.78 16,11 Z"
+                        transform="matrix(0.75,0,0,0.75,3.5,2.5)"
+                      ></path>
+                    </g>
+                  </svg>
+                </i>
+                Debug</a
+              >
+            </li>
+            <li id="c_about">
+              <a draggable="false" href="#">
+                About</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="noselect" id="scrollRightButton"></div>
+        <div class="noselect" id="scrollLeftButton"></div>
+        <div id="zoomSlider" class="btn_shadowed">
+          <p class="noselect" id="centerGraphButton">&#8982;</p>
+          <p class="noselect" id="zoomInButton">+</p>
+          <p class="noselect" id="zoomSliderParagraph"></p>
+          <p class="noselect" id="zoomOutButton">-</p>
+        </div>
+      </section>
+      <aside id="detailsArea" style="background-color: #ecf0f1; color: black;">
+        <section id="generalDetailsEdit" class="hidden">
+          <h1 id="editHeader" style="font-size: 1.3em; font-weight: bold;">	
+            <a style="float: left;padding-left: 3%;" target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSc3O_WpXdTUG8rIw1YjVnVtot0oMQdV1PesCNqJJASCLXjwSQ/viewform?usp=sf_link"><span>Survey</span></a>
+            Property details	
+            <span id="help" onclick="openHelp()">Help</span>
+          </h1>
+
+          <div style="display: none;">
+          <div>
+            <!--begin of ontology metaData -->
+            <div class="textLineEditWithLabel">
+              <form class="converter-form-Editor" id="titleEditForm">
+                <label
+                  class="EditLabelForInput"
+                  id="titleEditor-label"
+                  for="titleEditor"
+                  title="Ontology title as dc:title"
+                  >Title:</label
+                >
+                <input
+                  class="modifiedInputStyle"
+                  type="text"
+                  id="titleEditor"
+                  autocomplete="off"
+                  value=""
+                />
+              </form>
+            </div>
+            <div class="textLineEditWithLabel">
+              <form class="converter-form-Editor" id="iriEditForm">
+                <label
+                  class="EditLabelForInput"
+                  id="iriEditor-label"
+                  for="iriEditor"
+                  >IRI:</label
+                >
+                <input type="text" id="iriEditor" autocomplete="off" value="" />
+              </form>
+            </div>
+            <div class="textLineEditWithLabel">
+              <form class="converter-form-Editor" id="versionEditForm">
+                <label
+                  class="EditLabelForInput"
+                  id="versionEditor-label"
+                  for="versionEditor"
+                  title="Ontology version number as owl:versionInfo"
+                  >Version:</label
+                >
+                <input
+                  type="text"
+                  id="versionEditor"
+                  value=""
+                  autocomplete="off"
+                />
+              </form>
+            </div>
+            <div class="textLineEditWithLabel">
+              <form class="converter-form-Editor" id="authorsEditForm">
+                <label
+                  class="EditLabelForInput"
+                  id="authorsEditor-label"
+                  for="authorsEditor"
+                  title="Ontology authors as dc:creator"
+                  >Authors:</label
+                >
+                <input
+                  type="text"
+                  id="authorsEditor"
+                  value=""
+                  autocomplete="off"
+                />
+              </form>
+            </div>
+            <h4 class="subAccordion accordion-trigger noselect">Prefix</h4>
+            <div class="subAccordionDescription" id="containerForPrefixURL">
+              <div id="prefixURL_Description">
+                <span class="boxed">Prefix</span>
+                <span class="boxed">IRI</span>
+              </div>
+              <div id="prefixURL_Container"></div>
+              <div align="center" id="containerForAddPrefixButton">
+                <button id="addPrefixButton">Add Prefix</button>
+              </div>
+            </div>
+          </div>
+          <!--end of ontology metaData -->
+
+          <h3 class="accordion-trigger noselect">Description</h3>
+          <div>
+            <textarea
+              rows="4"
+              cols="25"
+              title="Ontology description as dc:description"
+              class="descriptionTextClass"
+              id="descriptionEditor"
+            ></textarea>
+          </div>
+          <h3 class="accordion-trigger noselect accordion-trigger-active">
+            Selected Element
+          </h3>
+          <div>
+            <div id="selectedElementProperties" class="hidden">
+              <div class="textLineEditWithLabel">
+                <form class="converter-form-Editor" id="element_iriEditForm">
+                  <label
+                    class="EditLabelForInput"
+                    id="element_iriEditor-label"
+                    for="element_iriEditor"
+                    >IRI:</label
+                  >
+                  <input
+                    type="text"
+                    id="element_iriEditor"
+                    autocomplete="off"
+                    value=""
+                  />
+                </form>
+              </div>
+              <div class="textLineEditWithLabel">
+                <form class="converter-form-Editor" id="element_labelEditForm">
+                  <label
+                    class="EditLabelForInput"
+                    id="element_labelEditor-label"
+                    for="element_labelEditor"
+                    >Label:</label
+                  >
+                  <input
+                    type="text"
+                    id="element_labelEditor"
+                    autocomplete="off"
+                    value=""
+                  />
+                </form>
+              </div>
+              <div class="textLineEditWithLabel">
+                <form class="converter-form-Editor" id="typeEditForm">
+                  <label
+                    class="EditLabelForInput"
+                    id="typeEditor-label"
+                    for="typeEditor"
+                    >Type:</label
+                  >
+                  <select id="typeEditor" class="dropdownMenuClass"></select>
+                </form>
+                <form class="converter-form-Editor" id="typeEditForm_datatype">
+                  <label
+                    class="EditLabelForInput"
+                    id="typeEditor_datatype-label"
+                    for="typeEditor_datatype"
+                    >Datatype:</label
+                  >
+                  <select
+                    id="typeEditor_datatype"
+                    class="dropdownMenuClass"
+                  ></select>
+                </form>
+              </div>
+              <div
+                class="textLineEditWithLabel"
+                id="property_characteristics_Container"
+              >
+                Characteristics:
+                <div
+                  id="property_characteristics_Selection"
+                  style="padding-top: 2px;"
+                ></div>
+              </div>
+            </div>
+            <div id="selectedElementPropertiesEmptyHint">
+              Select an element in the visualization.
+            </div>
+          </div>
+        </div>
+          <!-- /////////////////html side menu section/////////////////////// -->
+
+          <!-- /////////////////html side menu section/////////////////////// -->
+        </section>
+        <section id="generalDetails" class="hidden">
+          <h1 id="title"></h1>
+          <span><a id="about" href=""></a></span>
+          <h5>Version: <span id="version"></span></h5>
+          <h5>Author(s): <span id="authors"></span></h5>
+          <h5>
+            <label
+              >Language:
+              <select id="language" name="language" size="1"></select
+            ></label>
+          </h5>
+          <h3 class="accordion-trigger noselect accordion-trigger-active">
+            Description
+          </h3>
+          <div class="accordion-container scrollable">
+            <p id="description"></p>
+          </div>
+          <h3 class="accordion-trigger noselect">Metadata</h3>
+          <div id="ontology-metadata" class="accordion-container"></div>
+          <h3 class="accordion-trigger noselect">Statistics</h3>
+          <div class="accordion-container">
+            <p class="statisticDetails">
+              Classes: <span id="classCount"></span>
+            </p>
+            <p class="statisticDetails">
+              Object prop.: <span id="objectPropertyCount"></span>
+            </p>
+            <p class="statisticDetails">
+              Datatype prop.: <span id="datatypePropertyCount"></span>
+            </p>
+            <div class="small-whitespace-separator"></div>
+            <p class="statisticDetails">
+              Individuals: <span id="individualCount"></span>
+            </p>
+            <div class="small-whitespace-separator"></div>
+            <p class="statisticDetails">Nodes: <span id="nodeCount"></span></p>
+            <p class="statisticDetails">Edges: <span id="edgeCount"></span></p>
+          </div>
+          <h3 class="accordion-trigger noselect" id="selection-details-trigger">
+            Selection Details
+          </h3>
+          <div class="accordion-container" id="selection-details">
+            <div id="classSelectionInformation" class="hidden">
+              <p class="propDetails">Name: <span id="name"></span></p>
+              <p class="propDetails">Type: <span id="typeNode"></span></p>
+              <p class="propDetails">
+                Equiv.: <span id="classEquivUri"></span>
+              </p>
+              <p class="propDetails">
+                Disjoint: <span id="disjointNodes"></span>
+              </p>
+              <p class="propDetails">
+                Charac.: <span id="classAttributes"></span>
+              </p>
+              <p class="propDetails">
+                Individuals: <span id="individuals"></span>
+              </p>
+              <p class="propDetails">
+                Description: <span id="nodeDescription"></span>
+              </p>
+              <p class="propDetails">Comment: <span id="nodeComment"></span></p>
+            </div>
+            <div id="propertySelectionInformation" class="hidden">
+              <p class="propDetails">Name: <span id="propname"></span></p>
+              <p class="propDetails">Type: <span id="typeProp"></span></p>
+              <p id="inverse" class="propDetails">Inverse: <span></span></p>
+              <p class="propDetails">Domain: <span id="domain"></span></p>
+              <p class="propDetails">Range: <span id="range"></span></p>
+              <p class="propDetails">
+                Subprop.: <span id="subproperties"></span>
+              </p>
+              <p class="propDetails">
+                Superprop.: <span id="superproperties"></span>
+              </p>
+              <p class="propDetails">Equiv.: <span id="propEquivUri"></span></p>
+              <p id="infoCardinality" class="propDetails">
+                Cardinality: <span></span>
+              </p>
+              <p id="minCardinality" class="propDetails">
+                Min. cardinality: <span></span>
+              </p>
+              <p id="maxCardinality" class="propDetails">
+                Max. cardinality: <span></span>
+              </p>
+              <p class="propDetails">
+                Charac.: <span id="propAttributes"></span>
+              </p>
+              <p class="propDetails">
+                Description: <span id="propDescription"></span>
+              </p>
+              <p class="propDetails">Comment: <span id="propComment"></span></p>
+            </div>
+            <div id="noSelectionInformation">
+              <p><span>Select an element in the visualization.</span></p>
+            </div>
+          </div>
+        </section>
+        <div id="search-result-details"></div>
+        <div id="search-result-details-objects" style="display: none;"></div>
+      </aside>
+      <div id="blockGraphInteractions" class="hidden"></div>
+      <div id="WarningErrorMessagesContainer" class="">
+        <div id="WarningErrorMessages" class=""></div>
+      </div>
+
+      <div id="DirectInputContent" class="hidden">
+        <div id="direct-text-input-container">
+          <textarea
+            rows="4"
+            cols="25"
+            title="Direct Text input as JSON(experimental)"
+            class="directTextInputStyle"
+            id="directInputTextArea"
+          ></textarea>
+          <div id="di_controls">
+            <ul>
+              <li>
+                <button id="directUploadBtn">Upload</button>
+              </li>
+              <li>
+                <button id="close_directUploadBtn">Close</button>
+              </li>
+              <li id="Error_onLoad" class="hidden">Some text if ERROR</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="myHelpModal" class="modal">
+    <div style="width: 50%;" class="modal-content">
+      <div class="modal-header">
+        <span class="close close_help">&times;</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div style="padding: 16px 16px;" class="modal-body">
+        <div>
+          <div>
+            <div><b style="font-size: 16px;">1. Selecting the required data store for search</b></div>
+            <br>
+            <p>Select Wikidata or Bioportal from the dropdown in the left side bar</p>
+            <img style="width: 25%;" src="Images/dropdown.PNG" alt="Datastore selection" /> 
+          </div>
+          <br>
+          <div>
+          <div>
+         <b style="font-size: 16px;">2. How do I create a resource and search for existing elements from the selected datastore?</b></div>
+          <br>
+          <ul>
+            <li>Drag and drop a resource from the left side bar</li>
+            <li>Double click on the element</li>
+            <li>Type inside the search box</li>
+            <li>Select an element from the search results and you can find the results under Property details on the right side</li>
+          </ul>
+        <img src="Images/Resource.gif" alt="Resource creation" /> 
+      </div>
+        <br>
+        <div>
+         <div>
+        <b style="font-size: 16px;">3. How do I create a new entity?</b>
+      </div> 
+        <br>
+        <ul>
+          <li>Drag and drop a resource from the left side bar</li>
+          <li>Double click on the element</li>
+          <li>Type the name you would like to add to the new entity</li>
+          <li>Click on the 'create new entity' button</li>
+        </ul>
+        </div>
+        <br>
+        <div>
+          <div>
+         <b style="font-size: 16px;">4. How to find existing properties between 2 entities?</b>
+       </div> 
+         <br>
+         <ul>
+           <li>Create 2 resources and connect them with the 'hasRelation' property</li>
+           <li>Double click on the property box</li>
+           <li>Any existing relation between the entities will be displayed in the pop up else create a new property using the 'Create new property' button</li>
+         </ul>
+         </div>
+         <br>
+         <div>
+          <div>
+         <b style="font-size: 16px;">5. How to export ttl as RDF/RDF-S?</b>
+       </div> 
+         <br>
+         <span style="line-height: normal;">Once the graph is constructed, select the option of 'Export as RDF' or 'Export as RDF-S' under the Export/Save tab in the footer.</span>
+         </div>
+         <br>
+         <div>
+          <div>
+         <b style="font-size: 16px;">6. How to add the graph or ttl to Apache Jena Fuseki server?</b>
+       </div> 
+         <br>
+         <ul>
+           <li>Once the graph is contructed, if you directly wish to upload the current graph, select 'Upload current graph to Fuseki' by entering the dataset name on your Fuseki server.</li>
+           <li>If you wish to upload a ttl file, select 'Upload TTL file to Fuseki' by entering the dataset name on your Fuseki server.</li>
+         </ul>
+         </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span onclick="close_modal()" class="close">&times;</span>
+          <h2>Search from Wikidata / Bioportal</h2>
+        </div>
+        <div class="modal-body">
+          <div class="search-block">	
+            <label for="search-filter">Search</label>	
+            <input	
+              type="text"	
+              id="search-filter"	
+              name="search-filter"	
+            />
+            <button onclick="close_modal()">Create new entity</button>	
+          </div><!--onkeyup="getSearchResults(event)"-->
+          <input
+            type="hidden"
+            id="search-filter-hidden"
+            onclick="elementNodeSearch()"
+            name="search-filter"
+          /><!--onkeyup="getSearchResults(event)"-->
+
+          <input
+            type="hidden"
+            id="setupSideMenu-input-hidden"
+            onclick="setupSideMenu()"
+          />
+          <input
+            type="hidden"
+            id="loadProp-hidden"
+            onclick="loadPropLabels()"
+          />
+
+          <hr style="visibility: hidden;" />
+          <div id="loader" class="loader hidden" style="float: right;"></div>
+          <br />
+          <div id="search-results" style="p"></div>
+        </div>
+        <div class="modal-footer">
+          <h3>Modal Footer</h3>
+        </div>
+      </div>
+    </div>
+
+    <div id="myPropertyModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <span onclick="close_property_modal()" class="close close-property-modal">&times;</span>
+          <h2>Create new property or use existing properties</h2>
+        </div>
+        <div class="modal-body">
+          <div class="search-block">	
+            <label for="property-search-filter">New property name</label>	
+            <input	
+              type="text"	
+              id="property-search-filter"	
+              name="property-search-filter"	
+            />	
+            <button onclick="close_property_modal()">	
+              Create new property	
+            </button>	
+          </div>
+          <hr style="visibility:hidden;" />
+          <div id="loader" class="loader hidden" style="float: right;"></div>
+          <br />
+          <div id="property-search-results" style="p"></div>
+        </div>
+        <div class="modal-footer">
+          <h3>Modal Footer</h3>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/d3.min.js"></script>
+    <script src="js/webvowl.js"></script>
+    <script src="js/webvowl.app.js"></script>
+    <script>
+      window.onload = webvowl.app().initialize;
+    </script>
+
+    <!--Scripts to handle search modal logic -->
+    <script>
+      // Get the modal
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("element_labelEditor");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+        document.getElementById("search-filter").focus();
+      };
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+        resetModalView();
+      };
+
+      close_modal = function () {
+        modal.style.display = "none";
+        resetModalView();
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+          resetModalView();
+        }
+      };
+
+      function resetModalView() {
+        document.getElementById("loader").classList.add("hidden");
+        document.getElementById("search-filter").value = "";
+        document.getElementById("search-results").innerHTML = "";
+      }
+    </script>
+    <script>
+      function openHelp() {
+        var helpModal = document.getElementById("myHelpModal");
+        helpModal.style.display = "block";
+
+         // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close_help")[0];
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        helpModal.style.display = "none";
+      };
+      }
+     </script>
+    <script>
+      // Get the modal
+      var propertyModal = document.getElementById("myPropertyModal");
+
+      // Get the button that opens the modal
+      // var btn = document.getElementById("element_labelEditor");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close-property-modal")[0];
+
+      // When the user clicks the button, open the modal
+      // btn.onclick = function() {
+
+      //     propertyModal.style.display = "block";
+      //     document.getElementById("search-filter").focus();
+      // }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        propertyModal.style.display = "none";
+        resetPropertyModalView();
+      };
+
+      close_property_modal = function () {	
+        propertyModal.style.display = "none";	
+        resetPropertyModalView();
+      };
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == propertyModal) {
+          propertyModal.style.display = "none";
+          resetPropertyModalView();
+        }
+      };
+
+      function resetPropertyModalView() {
+        document.getElementById("loader").classList.add("hidden");
+        document.getElementById("property-search-filter").value = "";
+        document.getElementById("property-search-results").innerHTML = "";
+      }
+    </script>
+
+    <script>
+      var searchResults = [];
+      var vm = {};
+      vm.selected = null;
+      var cfg = settingsService().describe;
+      var cache = [];
+
+      var label = {
+        "http://www.wikidata.org/prop/direct/P31": "instance of",
+        "http://www.wikidata.org/prop/direct/P105": "taxon rank",
+        "http://www.wikidata.org/prop/direct/P129": "physically interacts with",
+        "http://www.wikidata.org/prop/direct/P171": "parent taxon",
+        "http://www.wikidata.org/prop/direct/P225": "taxon name",
+        "http://www.wikidata.org/prop/direct/P279": "subclass of",
+        "http://www.wikidata.org/prop/direct/P361": "part of",
+        "http://www.wikidata.org/prop/direct/P682": "biological process",
+        "http://www.wikidata.org/prop/direct/P688": "encodes",
+        "http://www.wikidata.org/prop/direct/P1462": "standards body",
+        "http://www.wikidata.org/prop/direct/P2293": "genetic association",
+        "http://www.wikidata.org/entity/Q146": "house cat",
+        "http://www.wikidata.org/entity/Q7367": "Culicidae",
+        "http://www.wikidata.org/entity/Q7432": "species",
+        "http://www.wikidata.org/entity/Q12078": "cancer",
+        "http://www.wikidata.org/entity/Q16521": "taxon",
+        "http://www.wikidata.org/entity/Q37033": "World Wide Web Consortium",
+        "http://www.wikidata.org/entity/Q14818032": "cell proliferation",
+      };
+
+      // delay between concurrent request
+      var delay = 100;
+      // number of concurrent request
+      var running = 0;
+
+      $(document).ready(function () {
+        function delay(callback, ms) {
+          var timer = 0;
+          return function () {
+            var context = this,
+              args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              callback.apply(context, args);
+            }, ms || 0);
+          };
+        }
+        $("#search-filter").keyup(
+          delay(function (e) {
+            getSearchResultsNow(e);
+          }, 500)
+        );
+      });
+
+      function getSearchResultsNow(ev) {
+        if(document.getElementById('wikidata').value == "Wikidata") {
+        document.getElementById("loader").classList.remove("hidden");
+        var searchInput = document.getElementById("search-filter").value;
+        d3.select("#element_labelEditor").node().value = searchInput;
+        d3.select("#element_iriEditor").node().value = searchInput.replace(
+          / /g,
+          "_"
+        );
+        const e = new Event("change");
+
+        d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+        // Dont send fetch request if input is empty.
+        if (!searchInput) {
+          return;
+        }
+
+        var xhr = new XMLHttpRequest();
+        var params = {
+          action: "wbsearchentities",
+          format: "json",
+          language: "en",
+          uselang: "en",
+          type: "item",
+          continue: "0",
+          limit: "20",
+          search: searchInput,
+          origin: "*",
+        };
+
+        var queryString = Object.keys(params)
+          .map((key) => {
+            return (
+              encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+            );
+          })
+          .join("&");
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            onSearch(JSON.parse(xhr.response).search);
+          }
+        };
+        xhr.open(
+          "GET",
+          "https://www.wikidata.org/w/api.php?" + queryString,
+          true
+        );
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        xhr.send({ request: "authentication token" });
+      }
+      else if (document.getElementById('wikidata').value == "Bioportal") {
+        document.getElementById("loader").classList.remove("hidden");
+        var searchInput = document.getElementById("search-filter").value;
+        d3.select("#element_labelEditor").node().value = searchInput;
+        d3.select("#element_iriEditor").node().value = searchInput.replace(
+          / /g,
+          "_"
+        );
+        const e = new Event("change");
+
+        d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+        // Dont send fetch request if input is empty.
+        if (!searchInput) {
+          return;
+        }
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            onSearchBio(JSON.parse(xhr.response).collection);
+          }
+        };
+
+        var params = {
+          q: searchInput,
+          apikey: "931a42ff-cc0e-497a-9872-6c12359c941d"
+        };
+
+        var queryString = Object.keys(params)
+          .map((key) => {
+            return (
+              encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+            );
+          })
+          .join("&");
+
+
+        xhr.open(
+          "GET",
+          "http://data.bioontology.org/search?" + queryString,
+          true
+        );
+        xhr.send();
+      }
+      }
+      function elementNodeSearch(searchInput) {
+        var searchInput = document.getElementById("search-filter-hidden").value;
+        $.getJSON(
+          "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageprops&ppprop=wikibase_item&redirects=1&origin=*&titles=" +
+            searchInput,
+          function (data) {
+            console.log("data-mydata");
+            console.log(data);
+            console.log(data.batchcomplete);
+
+            for (n in data.query.pages) {
+              if (data.query.pages[n] && data.query.pages[n].pageprops) {
+                searchInput = data.query.pages[n].pageprops.wikibase_item;
+                elementNodeSearch2(searchInput);
+              }
+            }
+          }
+        );
+      }
+      function elementNodeSearch2(searchInput) {
+
+        var xhr = new XMLHttpRequest();
+        var params = {
+          action: "wbsearchentities",
+          format: "json",
+          language: "en",
+          uselang: "en",
+          type: "item",
+          continue: "0",
+          limit: "20",
+          search: window[window.newParent.id() + "wikiId"],
+          origin: "*",
+        };
+
+        var queryString = Object.keys(params)
+          .map((key) => {
+            return (
+              encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+            );
+          })
+          .join("&");
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            onSearchNodeClick(JSON.parse(xhr.response).search);
+          }
+        };
+        xhr.open(
+          "GET",
+          "https://www.wikidata.org/w/api.php?" + queryString,
+          true
+        );
+        xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        xhr.send({ request: "authentication token" });
+        //         }else{return}
+        //     }
+        // })
+      
+      }
+      function onSearchNodeClick(data) {
+        if (localStorage.getItem("search_node")) {
+          if (data[0]) {
+            searchResults = [];
+            data.forEach((r) => {
+              searchResults.push({
+                uri: r.concepturi,
+                label: r.label,
+                desc: r.description,
+                id: window[window.newParent.id() + "wikiId"],
+              });
+            });
+
+            window.clickedItemData_this = data[0];
+            load(data[0].concepturi, null, data[0].id);
+          } else {
+            localStorage.removeItem("search_node");
+            topbar.hide();
+          }
+          return;
+        }
+      }
+
+      function onSearch(data) {
+        topbar.show();
+        searchResults = [];
+        data.forEach((r) => {
+          searchResults.push({
+            uri: r.concepturi,
+            label: r.label,
+            desc: r.description,
+            id: r.id,
+          });
+        });
+
+        var result = "";
+        for (var i = 0; i < data.length; i++) {
+          result += ` <a href="javascript:void(0)" id="searched-item-${i}" onclick="provideSearchResultData(${i}, '${data[i].label}', '${data[i].id}')">
+                            <div class="searched-element">
+                                <h1> ${data[i].label} </h1>
+                                <p> ${data[i].description} </p>
+                            </div>
+                        </a>
+                     `;
+          document.getElementById("search-results").innerHTML = result;
+        }
+        document.getElementById("loader").classList.add("hidden");
+      }
+
+      function onSearchBio(data) {
+        topbar.show();
+        searchResults = [];
+        data.forEach((r) => {
+          searchResults.push({
+            uri: r.id,
+            label: r.prefLabel,
+            desc: (r.definition && r.definition[0]) ? r.definition[0] : "",
+            id: r.id,
+            ontologyName: r.links.ancestors.split("/")[4],
+            url: r["@id"]
+          });
+        });
+
+        var result = "";
+        for (var i = 0; i < searchResults.length; i++) {
+          result += ` <a href="javascript:void(0)" id="searched-item-${i}" onclick="addBioportalElement('${searchResults[i].label}', '${searchResults[i].url}')">
+                            <div class="searched-element">
+                                <h1> ${searchResults[i].label}   -  ${searchResults[i].ontologyName} </h1>
+                                <p> ${searchResults[i].url} </p>
+                                <p> ${searchResults[i].desc} </p>
+                            </div>
+                        </a>
+                     `;
+          document.getElementById("search-results").innerHTML = result;
+        }
+        document.getElementById("loader").classList.add("hidden");
+      }
+
+      var addBioportalElement = function(text, url ) {
+        document.getElementById("loader").classList.remove("hidden");
+        d3.select("#element_labelEditor").node().value = text;
+        d3.select("#element_iriEditor").node().value = url;
+
+        const e = new Event("change");
+
+        d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+        resetModalView();
+      }
+
+
+      var provideSearchResultData = function (clickedIndex, text, wikiId) {
+        // making new parent node
+        localStorage.setItem("selected_object_wikiid", wikiId);
+        window[window.newParent.id() + "wikiId"] = wikiId;
+        window.newParent = window.parentInqueue;
+        window.newParentId = window.newParent.id();
+        window[window.newParentId] = {};
+        document.getElementById("loader").classList.remove("hidden");
+        d3.select("#element_labelEditor").node().value = text;
+        d3.select("#element_iriEditor").node().value = "wd:"+wikiId.replace(/ /g, "_");
+
+        const e = new Event("change");
+
+        d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+        var clickedItemData = searchResults[clickedIndex];
+        load(clickedItemData.uri, wikiId);
+      };
+
+      function buildAndShowPropertyResults(obj) {
+        var result = ``;
+
+        obj.map((s) => {
+          result += `<a href="javascript:void(0)" class="data-heading updateProperty">
+                        <div class="searched-element updateProperty">
+                          <h1> ${s.prop2Label.value+ " id:"+ s.prop2.value.split("/")[5]}</h1>
+                        </div>
+                       </a>
+                      `;
+        });
+
+        var displayModal = document.getElementById("myPropertyModal");
+        document.getElementById("property-search-results").innerHTML = result;
+        displayModal.style.display = "block";
+
+        //Actual value before changing	
+        var actualValue = document.getElementById("element_labelEditor").value;	
+        console.log(actualValue);
+
+        $(".updateProperty").on("click", function (div) {
+          let property_name = div.target.innerText;
+
+          d3.select("#element_labelEditor").node().value = property_name.split("id:")[0];
+          d3.select("#element_iriEditor").node().value = "wdt:"+property_name.split("id:")[1].replace(
+            / /g,
+            "_"
+          );
+          const e = new Event("change");
+
+          d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+          document.getElementById("property-search-results").innerHTML = "";
+          resetPropertyModalView();
+          displayModal.style.display = "none";
+        });
+
+        /* 
+        
+        This code shows properties in side section. 
+
+
+        document.getElementById('search-result-details').innerHTML = result;
+        topbar.hide() 
+        setupSideMenu();
+        $( '.updateProperty' ).on( 'click', function (div) { 
+ 
+            let property_name = div.target.innerText; 
+            
+            d3.select("#element_labelEditor").node().value = property_name;
+            d3.select("#element_iriEditor").node().value = property_name.replace(/ /g,"_");
+            const e = new Event("change");
+         
+            d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+         });
+
+
+        */
+      }
+
+      function buildAndShowResults() {
+        var clickedItemData;
+        let clickedItemId = window.newParentId;
+        if (localStorage.getItem("search_node")) {
+          localStorage.removeItem("search_node");
+          clickedItemData = window.clickedItemData_this;
+          clickedItemId = window.currentClickedNodeId;
+        } else {
+          clickedItemData = searchResults.filter(
+            (item) => item.uri === vm.selected.uri
+          )[0];
+        }
+
+        // alert(window.newParent.id() + clickedItemData.id)
+        // window[window.newParent.id() +'wikiId'] = clickedItemData.id;
+        let result =
+          `<div class="section-wrap">
+                        <div class="section">
+                            <div class="top-section clearfix">
+                            <span class="middle-link"><a href="${vm.selected.uri}" target="_blank">URI: ${vm.selected.uri}</a> </span>
+                            </div>
+                            <div class="heading-section">
+                            <h2>Title: ${clickedItemData.label} </h2>
+                            <input type="hidden" id="wikiId" value="` +
+          vm.selected.wikiId +
+          `" />
+                            </div>
+                     `;
+
+        if (Array.isArray(vm.selected.image) && vm.selected.image.length > 0) {
+          let image = vm.selected.results[vm.selected.image[0].uri];
+
+          if (Array.isArray(image) && image.length > 0) {
+            result += `<div class="img-wrap"><img height="150" width="280" src="${image[0]}"></div>`;
+          } else if (image) {
+            result += `<div class="img-wrap"><img height="150" width="280" src="${image}"></div>`;
+          }
+        }
+        result += `<hr>`;
+        // start of properties
+        if (vm.selected.datatype.length > 0) {
+          let datatypePropertiesMarkup = `<div class="tabs-wrap">
+          <div class="tabs">
+            <div class="tab">
+              <label class="tab-label clearfix"><em>Datatype properties</em> <span class="numbers">[${vm.selected.datatype.length}]</span></label><div class="tab-content">
+                <div class="datatype-content">
+                  <ul>`;
+
+          var keyValuesList = [];
+
+          vm.selected.datatype.forEach((element) => {
+            keyValuesList.push({ label: element.label, value: "" });
+          });
+
+          let valuesList = [];
+
+          if (vm.selected.results) {
+            for (var key in vm.selected.results) {
+              let value = vm.selected.results[key][0];
+
+              if (
+                value === undefined ||
+                value.includes(".svg") ||
+                value.includes("jpg")
+              ) {
+                continue;
+              } else {
+                valuesList.push(value);
+              }
+            }
+          }
+
+          for (var i = 0; i < keyValuesList.length; i++) {
+            keyValuesList[i].value = valuesList[i];
+
+            if (keyValuesList[i].value == undefined) {
+              keyValuesList[i].value = "";
+            }
+
+            datatypePropertiesMarkup += `<li>
+                      <div class="data-heading">
+                        <span>${keyValuesList[i].label}</span>
+                      </div>
+                      <div class="data-text"><span>${keyValuesList[i].value}</span>
+                      </div>
+                    </li>`;
+          }
+          result += datatypePropertiesMarkup;
+          result += `</ul>
+                </div>
+              </div>
+            </div>`;
+        } // end of property if
+        // objects
+        result +=
+          `<div class="tab">
+              <label class="tab-label clearfix"><em>Existing Properties</em> <span class="numbers">[` +
+          vm.selected.objectsCount +
+          `]</span></label>
+              <div class="tab-content" style="display: block !important;">
+                <div class="object-content">
+                  <ul>
+                    <li>
+                      <div class="inner-tabswrap">`;
+        result += vm.selected.objecthtml;
+        result += `</div>
+                    </li>
+                  </ul>
+                </div>
+              </div> 
+            </div>`;
+
+        /*let externalLinksKey;
+        if (vm.selected.external && vm.selected.external.length > 0) {
+          externalLinksKey = vm.selected.external;
+          result += `<div class="tab">
+              <label class="tab-label clearfix"><em>External links </em> <span class="numbers"> [${externalLinksKey.length}]</span></label>
+              <div class="tab-content">
+                <div class="datatype-content block-li">
+                  <ul>`;
+          externalLinksKey.forEach((element) => {
+            result += `<li>
+                      <div class="data-heading">
+                        <span>${element.label}</span>
+                      </div><div class="data-text">
+                        <span></span>
+                      </div>
+                    </li>`;
+          });
+        }
+
+        if (Array.isArray(externalLinksKey) && externalLinksKey.length > 0) {
+          let externalLinkValues = vm.selected.results[externalLinksKey[0].uri];
+          if (externalLinkValues) {
+            externalLinkValues.forEach((url) => {
+              result += `<li>
+                      <div class="data-heading">
+                        <span></span>
+                      </div>
+                      <div class="data-text">
+                        <span><a href="${url}" target="_blank"> ${url} </a></span>
+                      </div>
+                    </li>`;
+            });
+          }
+        }*/
+        result += `
+            </div>
+            </div>
+        </div>
+        </div>`;
+        document.getElementById("search-result-details").innerHTML = result;
+        vm.selected.objectsCount = 0;
+        window[clickedItemId] = result;
+        document.getElementsByClassName("close")[0].click();
+        topbar.hide();
+
+        jQuery(function () {
+          jQuery(".tab > .tab-label.clearfix").click(function () {
+            jQuery(this).next(".tab-content").slideToggle();
+          });
+        });
+
+        jQuery(function () {
+          jQuery(".innertab label").click(function () {
+            jQuery(this).toggleClass("active");
+            jQuery(this).next(".tab-content").slideToggle();
+          });
+        });
+
+        // setupSideMenu();
+      }
+
+      function load(uri, sourceObject, wikiId) {
+        topbar.show();
+        var realUri = uri;
+        if (uri.includes("prop/direct"))
+          uri = uri.replace("prop/direct", "entity");
+
+        var c = cache.filter((s) => {
+          return s.uri == uri;
+        });
+        if (c.length > 0) {
+          vm.selected = c[0];
+          return c[0];
+        }
+
+        var source = sourceObject || null;
+        var selected = {
+          uri: uri,
+          source: source,
+          objects: [],
+          datatype: [],
+          text: [],
+          external: [],
+          image: [],
+          results: {},
+          objecthtml: "",
+        };
+        selected.getUri = function () {
+          return realUri;
+        };
+        vm.selected = selected;
+
+        vm.selected.objectsCount = 0;
+        vm.selected.wikiId = wikiId;
+        // Creating Queries for data.
+        let settings = this.settingsService();
+        var queryServiceModule = queryService(settings);
+        var propertiesQuery = queryServiceModule.getProperties(uri);
+
+        // Call For properties to SPARQL.
+        var properties;
+        let xhr = new XMLHttpRequest();
+
+        xhr.open(
+          "POST",
+          "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+            encodeURIComponent(
+              queryService(settingsService()).getProperties(uri)
+            ),
+          true
+        );
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let data = JSON.parse(xhr.response);
+            properties = data.results.bindings.filter((r) => {
+              return !cfg.exclude.includes(r.property.value);
+            });
+            // Call on sucess for some label addition. This needs to be fixed like RDF explorer.
+            onSuccess(data);
+
+            var total_count = 0;
+            var count = 0;
+            var array_length = properties.length;
+            properties.forEach((r) => {
+              total_count++;
+            });
+
+            properties.forEach((r) => {
+              count++;
+
+              var obj = { uri: r.property.value };
+
+              if (r.propertyLabel) {
+                obj.label = r.propertyLabel.value;
+              }
+
+              if (cfg.image.includes(obj.uri)) {
+                // console.log("cfg image")
+                // console.log(cfg.image)
+                selected.image.push(obj);
+                running += 1;
+                setTimeout(() => {
+                  loadPropUri(obj.uri, 1);
+                }, (running - 1) * delay);
+              } else if (cfg.external.includes(obj.uri)) {
+                selected.external.push(obj);
+                running += 1;
+                setTimeout(() => {
+                  loadPropUri(obj.uri);
+                }, (running - 1) * delay);
+              } else if (cfg.text.includes(obj.uri)) {
+                selected.text.push(obj);
+                // running +=1;
+                // setTimeout(() => {
+                //     loadDatatype( obj.uri );
+                // }, (running-1)*delay);
+              } else if (cfg.objects.includes(obj.uri) || r.kind.value == "1") {
+                selected.objects.push(obj);
+
+                loadObject(obj.uri, obj.label);
+              } else if (
+                cfg.datatype.includes(obj.uri) ||
+                r.kind.value == "2"
+              ) {
+                // running +=1;
+                // this will add properties
+                // selected.datatype.push(obj);
+                // setTimeout(() => {
+                //     loadDatatype( obj.uri );
+                // }, (running-1)*delay);
+              } else if (r.kind.value == "0") {
+                running += 1;
+                setTimeout(() => {
+                  let xhrOject = new XMLHttpRequest();
+                  xhrOject.open(
+                    "POST",
+                    "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+                      encodeURIComponent(
+                        queryServiceModule.countValuesType(
+                          clickedItemData.uri,
+                          obj.uri
+                        )
+                      ),
+                    true
+                  );
+                  xhrOject.onreadystatechange = function () {
+                    if (xhrOject.readyState == 4 && xhrOject.status == 200) {
+                      if (xhrOject.response.results.bindings.length > 0) {
+                        var uri_count = Number(
+                          xhrOject.response.results.bindings[0].uris.value
+                        );
+                        var lit_count = Number(
+                          xhrOject.response.results.bindings[0].lits.value
+                        );
+                        if (uri_count > lit_count) {
+                          selected.objects.push(obj);
+                          loadObject(obj.uri);
+                        } else {
+                          // this will add properties
+                          // selected.datatype.push(obj);
+                          // loadDatatype(obj.uri);
+                        }
+                      }
+                    }
+                    running -= 1;
+                  };
+
+                  xhrOject.setRequestHeader(
+                    "Access-Control-Allow-Origin",
+                    "http://localhost:8000"
+                  );
+                  xhrOject.send();
+                }, (running - 1) * delay);
+              }
+
+              // Last index called
+              if (count === total_count) {
+                setTimeout(() => {
+                  buildAndShowResults();
+                }, 2000);
+              }
+            });
+            // sort();
+
+            // setTimeout(() => {
+            //   // buildAndShowResults();
+            // }, 6000);
+          }
+        };
+        xhr.send();
+      }
+
+      function loadDatatype(prop) {
+        setTimeout(function () {
+          var xhr = new XMLHttpRequest();
+
+          xhr.open(
+            "POST",
+            "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+              encodeURIComponent(
+                queryService(settingsService()).getPropDatatype(
+                  vm.selected.uri,
+                  prop
+                )
+              ),
+            true
+          );
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              let data = JSON.parse(xhr.response);
+              vm.selected.results[prop] = data.results.bindings.map((s) => {
+                return s.lit.value;
+              });
+              // Call on sucess for some label addition. This needs to be fixed like RDF explorer.
+              onSuccess(data);
+            }
+            running -= 1;
+          };
+          // xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+          // xhr.setRequestHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
+          // xhr.setRequestHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token');
+          // xhr.setRequestHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+          xhr.send();
+        }, 1000);
+      }
+
+      function loadObject(prop, label) {
+        setTimeout(function () {
+          var xhr = new XMLHttpRequest();
+
+          vm.selected.objectsCount++;
+          xhr.open(
+            "POST",
+            "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+              encodeURIComponent(
+                queryService(settingsService()).getPropObject(
+                  vm.selected.uri,
+                  prop
+                )
+              ),
+            true
+          );
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+              let data = JSON.parse(xhr.response);
+              console.clear();
+              setObjectInnerHtml(label, data, prop);
+            }
+            running -= 1;
+          };
+          xhr.send();
+        }, 300);
+      }
+
+      function loadPropLabels() {
+        if (window.domainId && window.rangeId) {
+          $.getJSON(
+            "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+              encodeURIComponent(
+                queryService(settingsService()).getPropLabel(
+                  window.domainId,
+                  window.rangeId
+                )
+              ),
+            function (data) {
+              buildAndShowPropertyResults(data.results.bindings);
+            }
+          );
+        }
+        return;
+      }
+
+      function loadPropUri(prop, isConsole) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open(
+          "POST",
+          "https://query.wikidata.org/sparql?origin=*&format=json&query=" +
+            encodeURIComponent(
+              queryService(settingsService()).getPropUri(vm.selected.uri, prop)
+            ),
+          true
+        );
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            let data = JSON.parse(xhr.response);
+            vm.selected.results[prop] = data.results.bindings.map((s) => {
+              return s.uri.value;
+            });
+            // Call on sucess for some label addition. This needs to be fixed like RDF explorer.
+            // onSuccess(data);
+          }
+          running -= 1;
+        };
+        xhr.send();
+      }
+
+      function sort() {
+        vm.selected.objects.sort(function (a, b) {
+          return cfg.objects.indexOf(b.uri) - cfg.objects.indexOf(a.uri);
+        });
+      }
+
+      function saveObjOnDrop(event, label, obj, wikiurl, propId) {
+        localStorage.setItem("selected_object", obj);
+        let wikiarr = wikiurl.split("/");
+        localStorage.setItem("selected_object_wikiid", wikiarr[4]);
+        localStorage.setItem("selected_object_type", label);
+        localStorage.setItem("selected_object_type_id",propId);
+      }
+
+      function setObjectInnerHtml(label, data, prop) {
+        let innerHtml =
+          `<div class="innertab">
+                          <label>` +
+          label +
+          `</label>
+                          <div class="tab-content">
+                            <div class="tags-content">`;
+        let childInnerHtml = "";
+
+        let count = 0;
+        label = label.replace(/ /g, "-");
+        label = label.replace(/'/g, "");
+
+        data.results.bindings.map((s) => {
+          if (s.uriLabel) {
+            childInnerHtml =
+              childInnerHtml +
+              '<span id="obj-' +
+              label +
+              "-" +
+              count +
+              '" ondragstart="saveObjOnDrop(event,\'' +
+              label +
+              "','" +
+              s.uriLabel.value +
+              "','" +
+              s.uri.value +
+              "','" +
+              prop.split("/")[5] +
+              "')\"  ondragover=\"saveObjOnDrop(event,'" +
+              label +
+              "','" +
+              s.uriLabel.value +
+              "','" +
+              s.uri.value +
+              "','" +
+              prop.split("/")[5] +
+              '\')" draggable="true" uri_wikiid="' +
+              s.uri.value +
+              '">' +
+              s.uriLabel.value +
+              "</span>  ";
+            count++;
+          }
+        });
+        if (childInnerHtml !== "") {
+          innerHtml =
+            innerHtml +
+            childInnerHtml +
+            `</div>
+                          </div>
+                        </div>`;
+          vm.selected.objecthtml = vm.selected.objecthtml + innerHtml;
+        }
+      }
+
+      function settingsService() {
+        var settings = {
+          lang: "en",
+          labelUri: "http://www.w3.org/2000/01/rdf-schema#label",
+          endpoint: {
+            url: "https://query.wikidata.org/sparql",
+            type: "other",
+            label: "wikidata",
+          },
+          searchClass: {
+            uri: { type: "uri", value: "http://dbpedia.org/ontology/Person" },
+            label: { type: "literal", "xml:lang": "en", value: "person" },
+          },
+          resultLimit: 20,
+        };
+
+        settings.default = Object.assign({}, settings);
+        settings.prefixes = [
+          { prefix: "rdf", uri: "http://www.w3.org/1999/02/22-rdf-syntax-ns#" },
+          { prefix: "owl", uri: "http://www.w3.org/2002/07/owl#" },
+          { prefix: "text", uri: "http://jena.apache.org/text#" },
+          { prefix: "wds", uri: "http://www.wikidata.org/entity/statement/" },
+          { prefix: "wd", uri: "http://www.wikidata.org/entity/" },
+          { prefix: "wdv", uri: "http://www.wikidata.org/value/" },
+          { prefix: "wikibase", uri: "http://wikiba.se/ontology#" },
+          {
+            prefix: "psvn",
+            uri: "http://www.wikidata.org/prop/statement/value-normalized/",
+          },
+          { prefix: "ps", uri: "http://www.wikidata.org/prop/statement/" },
+          {
+            prefix: "pqv",
+            uri: "http://www.wikidata.org/prop/qualifier/value/",
+          },
+          { prefix: "pq", uri: "http://www.wikidata.org/prop/qualifier/" },
+          { prefix: "wdt", uri: "http://www.wikidata.org/prop/direct/" },
+          { prefix: "p", uri: "http://www.wikidata.org/prop/" },
+          { prefix: "rdfs", uri: "http://www.w3.org/2000/01/rdf-schema#" },
+          { prefix: "bd", uri: "http://www.bigdata.com/rdf#" },
+          { prefix: "dbc", uri: "http://dbpedia.org/resource/Category:" },
+          { prefix: "dbo", uri: "http://dbpedia.org/ontology/" },
+          { prefix: "dbp", uri: "http://dbpedia.org/property/" },
+          { prefix: "dbt", uri: "http://dbpedia.org/resource/Template:" },
+          { prefix: "dbr", uri: "http://dbpedia.org/resource/" },
+          { prefix: "dc", uri: "http://purl.org/dc/elements/1.1/" },
+          { prefix: "dct", uri: "http://purl.org/dc/terms/" },
+          { prefix: "foaf", uri: "http://xmlns.com/foaf/0.1/" },
+          { prefix: "yago", uri: "http://dbpedia.org/class/yago/" },
+          { prefix: "wiki-commons", uri: "http://commons.wikimedia.org/wiki/" },
+          { prefix: "umbel", uri: "http://umbel.org/umbel#" },
+          { prefix: "umbel-ac", uri: "http://umbel.org/umbel/ac/" },
+          { prefix: "umbel-rc", uri: "http://umbel.org/umbel/rc/" },
+          { prefix: "umbel-sc", uri: "http://umbel.org/umbel/sc/" },
+          {
+            prefix: "dul",
+            uri: "http://www.ontologydesignpatterns.org/ont/dul/DUL.owl",
+          },
+          { prefix: "schema", uri: "http://schema.org/" },
+          { prefix: "vrank", uri: "http://purl.org/voc/vrank#" },
+          { prefix: "skos", uri: "http://www.w3.org/2004/02/skos/core#" },
+          { prefix: "prov", uri: "http://www.w3.org/ns/prov#" },
+        ];
+        settings.describe = {
+          exclude: [
+            "http://www.wikidata.org/prop/direct/P443", //pronuntiation
+            "http://www.wikidata.org/prop/direct/P109", //signature
+          ],
+          objects: ["http://www.wikidata.org/prop/direct/P31"],
+          datatype: [],
+          text: ["http://dbpedia.org/ontology/abstract"],
+          image: [
+            "http://www.wikidata.org/prop/direct/P18", //thumbnail
+            "http://www.wikidata.org/prop/direct/P154", //logo
+            "http://www.wikidata.org/prop/direct/P41", //flag
+            "http://www.wikidata.org/prop/direct/P94", //coat of arms
+            "http://www.wikidata.org/prop/direct/P158", //seal
+            "http://www.wikidata.org/prop/direct/P242", //map
+            "http://www.wikidata.org/prop/direct/P948", //banner
+          ],
+          external: [
+            "http://www.wikidata.org/prop/direct/P2035",
+            "http://www.wikidata.org/prop/direct/P2888",
+            "http://www.wikidata.org/prop/direct/P973",
+            "http://www.wikidata.org/prop/direct/P856",
+            "http://www.wikidata.org/prop/direct/P3264",
+            "http://www.wikidata.org/prop/direct/P1896",
+            "http://www.wikidata.org/prop/direct/P1581",
+          ],
+        };
+
+        return settings;
+      }
+
+      function queryService(settings) {
+        var prefix = {
+          rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+          rdfs: "http://www.w3.org/2000/01/rdf-schema#",
+          owl: "http://www.w3.org/2002/07/owl#",
+          text: "http://jena.apache.org/text#",
+        };
+
+        function u(uri) {
+          return "<" + uri + ">";
+        }
+
+        function header(prefixes) {
+          h = "";
+          for (var i = 0; i < prefixes.length; i++) {
+            if (prefix[prefixes[i]])
+              h +=
+                "PREFIX " + prefixes[i] + ": " + u(prefix[prefixes[i]]) + "\n";
+            else console.log('prefix "' + prefixes[i] + '" not found');
+          }
+          return h;
+        }
+
+        function getProperties(uri) {
+          return (
+            "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+            "PREFIX bd: <http://www.bigdata.com/rdf#>\n" +
+            "PREFIX wikibase: <http://wikiba.se/ontology#>\n" +
+            "SELECT DISTINCT ?property ?propertyLabel ?kind WHERE {\n" +
+            "  <" +
+            uri +
+            "> ?property [] .\n" +
+            "  ?p wikibase:directClaim ?property .\n" +
+            '  OPTIONAL { ?p rdfs:label ?propertyLabel . FILTER (lang(?propertyLabel) = "en")}\n' +
+            "  BIND(\n" +
+            "    IF(EXISTS { ?property rdf:type owl:ObjectProperty},\n" +
+            "      1,\n" +
+            "      IF(EXISTS {?property rdf:type owl:DatatypeProperty},\n" +
+            "        2,\n" +
+            "        0))\n" +
+            "    as ?kind)\n" +
+            "}"
+          );
+        }
+
+        function countValuesType(uri, prop) {
+          return (
+            "SELECT (sum(?u) as ?uris) (sum(?l) as ?lits) WHERE {\n" +
+            "  <" +
+            uri +
+            "> <" +
+            prop +
+            "> ?o .\n" +
+            "  BIND(IF(ISURI(?o),1,0) AS ?u)\n" +
+            "  BIND(IF(!ISURI(?o),1,0) AS ?l)\n}"
+          );
+        }
+
+        function getPropUri(uri, prop) {
+          return (
+            "SELECT ?uri WHERE {\n" + "  <" + uri + "> <" + prop + "> ?uri .\n}"
+          );
+        }
+
+        function getPropObject(uri, prop) {
+          return (
+            "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "SELECT DISTINCT ?uri ?uriLabel WHERE {\n" +
+            "  <" +
+            uri +
+            "> <" +
+            prop +
+            "> ?uri .\n" +
+            '  OPTIONAL { ?uri rdfs:label ?uriLabel . FILTER (lang(?uriLabel) = "en")}\n}'
+          );
+        }
+
+        function getPropLabel(resource1, resource2) {
+          console.log(
+            "Hello get prop label resource1=" +
+              resource1 +
+              " resource2=" +
+              resource1
+          );
+          let query =
+            "PREFIX wd: <http://www.wikidata.org/entity/>\n" +
+            "PREFIX wikibase: <http://wikiba.se/ontology#>\n" +
+            "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+            "SELECT DISTINCT ?prop2 ?prop2Label WHERE {\n" +
+            "wd:" +
+            resource1 +
+            " ?prop2 wd:" +
+            resource2 +
+            " .\n" +
+            "?prop2tmp wikibase:directClaim ?prop2 .\n" +
+            "OPTIONAL {\n" +
+            "?prop2tmp rdfs:label ?prop2Label .\n" +
+            '    FILTER (lang(?prop2Label) = "en")\n' +
+            "}\n" +
+            "} LIMIT 10";
+          return query;
+        }
+
+        function getPropDatatype(uri, prop) {
+          return (
+            "SELECT DISTINCT ?lit WHERE {\n" +
+            "  <" +
+            uri +
+            "> <" +
+            prop +
+            "> ?lit .\n" +
+            '  FILTER (lang(?lit) = "" || lang(?lit) = "en")\n}'
+          );
+        }
+
+        return {
+          getProperties: getProperties,
+          countValuesType: countValuesType,
+          getPropUri: getPropUri,
+          getPropObject: getPropObject,
+          getPropDatatype: getPropDatatype,
+          getPropLabel: getPropLabel,
+        };
+      }
+
+      function getLabel(uri) {
+        return label[uri];
+      }
+
+      function setLabel(uri, l) {
+        label[uri] = l;
+      }
+
+      function onSuccess(data) {
+        var cur,
+          index,
+          variables = {};
+        var sorted = data.head.vars.sort((a, b) => {
+          return b.length - a.length;
+        });
+
+        while (sorted.length > 0) {
+          cur = sorted.pop();
+          index = sorted.indexOf(cur + "Label");
+          if (index >= 0) {
+            variables[cur] = cur + "Label";
+            sorted.splice(index, 1);
+          } else {
+            variables[cur] = false;
+          }
+        }
+
+        // add labels
+        var labelName;
+
+        data.results.bindings.forEach((r) => {
+          for (var varName in variables) {
+            labelName = variables[varName];
+            if (labelName) {
+              if (
+                r[varName].type == "uri" &&
+                r[labelName] &&
+                r[labelName].type == "literal"
+              )
+                setLabel(r[varName].value, r[labelName].value);
+            }
+          }
+        });
+      }
+    </script>
+    <!--Scripts to handle search modal logic -->
+
+    <!-- Script to handle drag drop - 
+    Don't remove this otherwise drag drop functionality won't work 
+-->
+    <script>
+      function allowDrop(ev) {
+        ev.preventDefault();
+      }
+    </script>
+    <!-- Script to handle drag drop -->
+
+    <!--Script to call properties query-->
+    <script>
+      function getPropertiesQueryData() {
+        var searchInput = document.getElementById("property-search-filter").value;
+        d3.select("#element_labelEditor").node().value = searchInput;	
+        d3.select("#element_iriEditor").node().value = searchInput.replace(	
+          / /g,	
+          "_"	
+        );	
+        const e = new Event("change");	
+        d3.select("#element_labelEditor")[0][0].dispatchEvent(e);
+      }
+
+      $(document).ready(function () {
+        function Delay(callback, ms) {
+          var timer = 0;
+          return function () {
+            var context = this,
+              args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+              callback.apply(context, args);
+            }, ms || 0);
+          };
+        }
+
+        $("#property-search-filter").keyup(
+          Delay(function (e) {
+            getPropertiesQueryData();
+          }, 500)
+        );
+      });
+    </script>
+    <script>
+      //topbar loader
+      /*! topbar 0.1.3, 2014-12-09
+       *  http://buunguyen.github.io/topbar
+       *  Copyright (c) 2014 Buu Nguyen
+       *  Licensed under the MIT License */
+      (function (a, b) {
+        "use strict";
+        !(function () {
+          for (
+            var b = 0, c = ["ms", "moz", "webkit", "o"], d = 0;
+            d < c.length && !a.requestAnimationFrame;
+            ++d
+          )
+            (a.requestAnimationFrame = a[c[d] + "RequestAnimationFrame"]),
+              (a.cancelAnimationFrame =
+                a[c[d] + "CancelAnimationFrame"] ||
+                a[c[d] + "CancelRequestAnimationFrame"]);
+          a.requestAnimationFrame ||
+            (a.requestAnimationFrame = function (c) {
+              var d = new Date().getTime(),
+                e = Math.max(0, 16 - (d - b)),
+                f = a.setTimeout(function () {
+                  c(d + e);
+                }, e);
+              return (b = d + e), f;
+            }),
+            a.cancelAnimationFrame ||
+              (a.cancelAnimationFrame = function (a) {
+                clearTimeout(a);
+              });
+        })();
+        var c,
+          d,
+          e,
+          f,
+          g,
+          h = function (a, b, c) {
+            a.addEventListener
+              ? a.addEventListener(b, c, !1)
+              : a.attachEvent
+              ? a.attachEvent("on" + b, c)
+              : (a["on" + b] = c);
+          },
+          i = {
+            autoRun: !0,
+            barThickness: 3,
+            barColors: {
+              0: "rgba(26,  188, 156, .9)",
+              ".25": "rgba(52,  152, 219, .9)",
+              ".50": "rgba(241, 196, 15,  .9)",
+              ".75": "rgba(230, 126, 34,  .9)",
+              "1.0": "rgba(211, 84,  0,   .9)",
+            },
+            shadowBlur: 10,
+            shadowColor: "rgba(0,   0,   0,   .6)",
+          },
+          j = function () {
+            (c.width = a.innerWidth), (c.height = 5 * i.barThickness);
+            var b = c.getContext("2d");
+            (b.shadowBlur = i.shadowBlur), (b.shadowColor = i.shadowColor);
+            var d = b.createLinearGradient(0, 0, c.width, 0);
+            for (var e in i.barColors) d.addColorStop(e, i.barColors[e]);
+            (b.lineWidth = i.barThickness),
+              b.beginPath(),
+              b.moveTo(0, i.barThickness / 2),
+              b.lineTo(Math.ceil(f * c.width), i.barThickness / 2),
+              (b.strokeStyle = d),
+              b.stroke();
+          },
+          k = function () {
+            c = b.createElement("canvas");
+            var d = c.style;
+            (d.position = "fixed"),
+              (d.top = d.left = d.right = d.margin = d.padding = 0),
+              (d.zIndex = 100001),
+              (d.display = "none"),
+              b.body.appendChild(c),
+              h(a, "resize", j);
+          },
+          l = {
+            config: function (a) {
+              for (var b in a) i.hasOwnProperty(b) && (i[b] = a[b]);
+            },
+            show: function () {
+              g ||
+                ((g = !0),
+                null !== e && a.cancelAnimationFrame(e),
+                c || k(),
+                (c.style.opacity = 1),
+                (c.style.display = "block"),
+                l.progress(0),
+                i.autoRun &&
+                  !(function b() {
+                    (d = a.requestAnimationFrame(b)),
+                      l.progress("+" + 0.05 * Math.pow(1 - Math.sqrt(f), 2));
+                  })());
+            },
+            progress: function (a) {
+              return "undefined" == typeof a
+                ? f
+                : ("string" == typeof a &&
+                    (a =
+                      (a.indexOf("+") >= 0 || a.indexOf("-") >= 0 ? f : 0) +
+                      parseFloat(a)),
+                  (f = a > 1 ? 1 : a),
+                  j(),
+                  f);
+            },
+            hide: function () {
+              g &&
+                ((g = !1),
+                null != d && (a.cancelAnimationFrame(d), (d = null)),
+                (function b() {
+                  return l.progress("+.1") >= 1 &&
+                    ((c.style.opacity -= 0.05), c.style.opacity <= 0.05)
+                    ? ((c.style.display = "none"), void (e = null))
+                    : void (e = a.requestAnimationFrame(b));
+                })());
+            },
+          };
+        "object" == typeof module && "object" == typeof module.exports
+          ? (module.exports = l)
+          : "function" == typeof define && define.amd
+          ? define(function () {
+              return l;
+            })
+          : (this.topbar = l);
+      }.call(this, window, document));
+    </script>
+    <!--Script to call properties query-->
+
+    <script>
+      function setupSideMenu() {
+        jQuery(function () {
+          jQuery(".tabs-wrap .tab > .tab-label").click(function () {
+            jQuery(this).next(".tab-content").slideToggle();
+          });
+        });
+
+        jQuery(function () {
+          jQuery(".innertab label").click(function () {
+            jQuery(this).toggleClass("active");
+            jQuery(this).next(".tab-content").slideToggle();
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
