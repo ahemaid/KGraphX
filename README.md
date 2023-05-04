@@ -25,3 +25,7 @@ Development setup
 2. Run `npm install --force` to install the dependencies and build the project
 3. Run `npm install grunt-cli -g` (install the npm package `grunt-cli` globally)
 4. Run `grunt webserver` starts a local live-updating webserver
+
+## License
+This project is licensed under the MIT License - see the
+[LICENSE](LICENSE) for details.
