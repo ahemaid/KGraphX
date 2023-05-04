@@ -1,3 +1,440 @@
-<div>
-test
-</div>
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Megha Jayakumar, Dr.Abderrahmane Khiat, Ahmad Hemid" />
+    <meta name="keywords" content="KGraphX, vowl, visual notation, web ontology language, owl, rdf, ontology visualization, ontologies, semantic web" />
+    <meta name="description" content="KGraphX - Web-based Visualization of Ontologies" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,400i,700,700i&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" type="text/css" href="css/webvowl.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/font-awesome.css"/> -->
+    <!-- <link rel="stylesheet" type="text/css" href="css/webvowl.app.css" /> -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <style>
+        body {
+            font-family: "Roboto";
+        }
+
+        button {
+            background-color: cornflowerblue;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid #3498db;
+            width: 30px;
+            height: 30px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <style>
+        .class-inner {
+            margin: 3px;
+            border-style: dashed;
+            border-color: beige;
+            cursor: pointer;
+        }
+
+
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+        @keyframes animatetop {
+            from {
+                top: -300px;
+                opacity: 0;
+            }
+
+            to {
+                top: 0;
+                opacity: 1;
+            }
+        }
+
+        /* The Close Button */
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            padding: 2px 16px;
+            background-color: rgb(113, 155, 211);
+            color: white;
+        }
+
+        .modal-body {
+            padding: 2px 16px;
+        }
+
+        .modal-footer {
+            padding: 2px 16px;
+            background-color: #fff;
+            color: white;
+        }
+    </style>
+    <style>
+        /* End Reset */
+
+        /* Default Font Styles
+______________________*/
+        .section-wrap {
+            width: 100%;
+            font-family: "Open Sans", sans-serif;
+        }
+
+        .section-wrap .section {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .section-wrap .top-section {
+            border-bottom: 1px solid #34495e;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-wrap .top-section a {
+            color: #69c;
+            font-size: 14px;
+        }
+
+        .section-wrap .top-section a:hover {
+            color: #007bff;
+        }
+
+        .section-wrap .heading-section {
+            text-align: center;
+            padding-bottom: 20px;
+        }
+
+        .section-wrap .heading-section h2 {
+            font-size: 18px;
+        }
+
+        .section-wrap .img-wrap {
+            padding-bottom: 10px;
+            border-bottom: 2px solid #fff;
+            margin-bottom: 15px;
+        }
+
+        .section-wrap .img-wrap img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .section-wrap .tab-label {
+            font-weight: bold;
+            padding-bottom: 10px;
+            display: block;
+            cursor: pointer;
+        }
+
+        .section-wrap .tab-label em {
+            font-style: normal;
+            float: left;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        .section-wrap .tab-label span {
+            text-align: right;
+            float: right;
+            width: 15%;
+            font-size: 16px;
+        }
+
+        .section-wrap-prop .tab-content {
+            display: none;
+        }
+
+        .section-wrap .tab-content {
+            display: none;
+        }
+
+        .datatype-content ul {
+            padding: 0;
+        }
+
+        .datatype-content li {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            list-style: none;
+        }
+
+        .datatype-content .data-heading {
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .datatype-content .data-heading span {
+            display: block;
+            padding: 3px 10px;
+            border: 2px solid #9467bd;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -o-border-radius: 4px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .datatype-content .data-text {
+            display: inline-block;
+        }
+
+        .datatype-content .data-text span {
+            font-style: normal;
+            font-size: 13px;
+        }
+
+        .datatype-content .data-text span::before {
+            content: ":";
+            margin-right: 5px;
+        }
+
+        .datatype-content.block-li .data-heading {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+
+        .datatype-content.block-li .data-text {
+            display: block;
+            text-align: center;
+        }
+
+        .datatype-content.block-li .data-text a {
+            color: #bdc3c7;
+        }
+
+        .datatype-content.block-li .data-text span::before {
+            content: "";
+            margin-right: 0;
+        }
+
+        .tabs-wrap .tab {
+            margin-bottom: 20px;
+        }
+
+        .tabs-wrap .tabs .tab:last-child {
+            margin-bottom: 0;
+        }
+
+        .innertab {
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+
+        .innertab label {
+            display: block;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #2e855e;
+            font-size: 14px;
+            border-radius: 2px;
+            padding: 5px;
+            color: black !important;
+            position: relative;
+        }
+
+        .innertab label::after {
+            content: "V";
+            /* background: url(images/down.png) no-repeat center center; */
+            background-size: 100% auto;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 999;
+            width: 15px;
+            height: 15px;
+        }
+
+        .innertab label.active::after {
+            content: "^";
+            background: url(images/up.png) no-repeat center center;
+            background-size: 100% auto;
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            z-index: 999;
+            width: 15px;
+            height: 15px;
+        }
+
+        .innertab .tab-content {
+            padding: 10px 10px 0 10px;
+        }
+
+        .innertab .tags-content {
+            text-align: center;
+        }
+
+        .innertab .tags-content span {
+            display: inline-block;
+            padding: 3px 10px;
+            border: 2px solid #9467bd;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            -o-border-radius: 4px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 11px;
+            cursor: pointer;
+        }
+
+        .object-content ul {
+            padding: 0;
+        }
+
+        .object-content li {
+            list-style: none;
+        }
+
+        /* Accordion styles */
+
+        .clearfix:after {
+            clear: both;
+            content: " ";
+            display: block;
+            font-size: 0;
+            line-height: 0;
+            visibility: hidden;
+            width: 0;
+            height: 0;
+        }
+        .container {
+        padding: 50px;
+     }
+
+img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <title>KGraphX Docs</title>
+</head>
+
+<body>
+    <div id="myHelp" class="container">
+      <div>
+        <h1>Documetation for Novice User</h1>
+        <h2><u>Frequently Asked Questions for Tool's Usage:</u></h2>
+      </div>
+        <div>
+          <div>
+            <div><b style="font-size: 16px;">1. Selecting the required data store for search</b></div>
+            <ul>
+                <li>Select Wikidata or Bioportal from the dropdown in the left side bar</li>
+            </ul>
+            <img style="width: 25%;padding-bottom:2%;" src="Images/dropdown.PNG" alt="Datastore selection" /> 
+          </div>
+          <div>
+          <div>
+         <b style="font-size: 16px;">2. How do I create a resource and search for existing elements from the selected datastore?</b></div>
+          <ul>
+            <li>Drag and drop a resource from the left side bar</li>
+            <li>Double click on the element</li>
+            <li>Type inside the search box</li>
+            <li>Select an element from the search results and you can find the results under Property details on the right side</li>
+          </ul>
+        <img style="padding-bottom:2%;" src="Images/Resource.gif" alt="Resource creation" /> 
+      </div>
+        <div>
+         <div>
+        <b style="font-size: 16px;">3. How do I create a new entity?</b>
+      </div> 
+        <ul>
+          <li>Drag and drop a resource from the left side bar</li>
+          <li>Double click on the element</li>
+          <li>Type the name you would like to add to the new entity</li>
+          <li>Click on the 'create new entity' button</li>
+        </ul>
+        </div>
+        <div>
+          <div>
+         <b style="font-size: 16px;">4. How to find existing properties between 2 entities?</b>
+       </div> 
+         <ul>
+           <li>Create 2 resources and connect them with the 'hasRelation' property</li>
+           <li>Double click on the property box</li>
+           <li>Any existing relation between the entities will be displayed in the pop up else create a new property using the 'Create new property' button</li>
+         </ul>
+         </div>
+         <div>
+          <div>
+         <b style="font-size: 16px;">5. How to export ttl as RDF/RDF-S?</b>
+       </div> 
+         <ul>
+            <li>Once the graph is constructed, select the option of 'Export as RDF' or 'Export as RDF-S' under the Export/Save tab in the footer.</li>
+        </ul>
+         </div>
+         <div>
+          <div>
+         <b style="font-size: 16px;">6. How to add the graph or ttl to Apache Jena Fuseki server?</b>
+       </div> 
+         <ul>
+           <li>Once the graph is contructed, if you directly wish to upload the current graph, select 'Upload current graph to Fuseki' by entering the dataset name on your Fuseki server.</li>
+           <li>If you wish to upload a ttl file, select 'Upload TTL file to Fuseki' by entering the dataset name on your Fuseki server.</li>
+         </ul>
+         </div>
+        </div>
+    </div>
+</body>
+</html>
