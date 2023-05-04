@@ -26,7 +26,7 @@ Node.js for installing the development tools and dependencies.
 3. Run `npm install grunt-cli -g` (install the npm package `grunt-cli` globally)
 4. Run `grunt webserver` starts a local live-updating webserver
 
-If everything worked fine, the application is available at https://localhost:8000/.
+If everything worked fine, the application is available at http://localhost:8000/.
 
 ## Contributing
 
