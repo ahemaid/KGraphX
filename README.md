@@ -1,5 +1,16 @@
-KGraphX 
-=======
+<h1 align="center">
+  <br>
+      KGraphX
+  <br>
+</h1>
+
+<p align="center">
+  <a href="mailto:ahmad.hemid@fit.fraunhofer.de">Contact</a> •
+  <a href="#contributing">Contribute</a> •
+  <a href="https://ahemaid.github.io/KGraphX/">Docs</a> •
+  <a href="https://github.com/ahemaid/KGraphX/issues">Issues</a> •
+  <a href="#license">License</a>
+</p>
 
 Base used : http://vowl.visualdataweb.org/webvowl.html
 
