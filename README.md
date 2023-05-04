@@ -26,6 +26,13 @@ Development setup
 3. Run `npm install grunt-cli -g` (install the npm package `grunt-cli` globally)
 4. Run `grunt webserver` starts a local live-updating webserver
 
+## Contributing
+
+You are very welcome to contribute to this project when you find a bug, want to suggest an
+improvement, or have an idea for a useful feature. Please find a set of guidelines at the
+[CONTRIBUTING.md](CONTRIBUTING.md) and the [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+
 ## License
 This project is licensed under the MIT License - see the
 [LICENSE](https://github.com/ahemaid/KGraphX/blob/main/license.txt) for details.
