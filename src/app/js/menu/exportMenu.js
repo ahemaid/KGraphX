@@ -129,7 +129,7 @@ module.exports = function ( graph ){
     var format = "rdf-schema";
     var success = exportTTLModule.requestExport(format);
     var result = exportTTLModule.resultingTTL_Content();
-    var ontoTitle = "RDF-S";
+    var ontoTitle = "RDFS";
     console.log("Exporter was successful: " + success);
     if ( success ) {
       var dataURI = "data:text/json;charset=utf-8," + encodeURIComponent(result);
