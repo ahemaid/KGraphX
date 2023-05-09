@@ -3300,13 +3300,13 @@ module.exports = function ( graphContainerSelector ){
         aProp.label("isTypeOf");
       } else if(defaultPropertyName == 'owl:objectProperty'){
 
-        aProp.label("HasRelation");
+        aProp.label("hasRelation");
       }
     }
     aProp.baseIri(d3.select("#iriEditor").node().value);
     if(!selected_object_type && defaultPropertyName == 'owl:objectProperty'){
 
-      aProp.iri(":HasRelation");
+      aProp.iri(":hasRelation");
     }else if(!selected_object_type)
       {
         aProp.iri(aProp.baseIri() + aProp.id());
