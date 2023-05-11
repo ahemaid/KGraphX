@@ -384,10 +384,13 @@ ______________________*/
   <body>
     <div id="myHelp" class="container">
       <div>
-        <h1>Documentation:</h1>
+        <h1>KGraphX Documentation</h1>
         <p style="text-align: center">
           <a href="#Overview">Overview</a> •
-          <a href="#Architecture">Architecture</a> • <a href="#FAQ">FAQ</a> •
+          <a href="#Architecture">Architecture</a> •
+          <a href="#Motivation">Motivation</a> •
+          <a href="#Features">Features</a> •
+          <a href="#Implementation">Implementation</a> •
           <a href="#Installation">Installation</a> • <a href="#FAQ">FAQ</a> •
 
           <!-- <a href="https://ahemaid.github.io/KGraphX/">Docs</a> • -->
@@ -418,107 +421,215 @@ ______________________*/
           </p>
         </div>
       </div>
+      <div id="Motivation">
+        <h2><u>Motivation:</u></h2>
 
-      <div>
-        <div id="Architecture">
-          <h2><u>KGraphX Architecture:</u></h2>
-          <div>
-            <p style="font-size: 16px; text-align: justify">
-              The architecture of KGraphX, consists of several modules and
-              components designed to serve as a Streamlined Visual KG Builder
-              specifically tailored for novice users. The main modules and
-              components are as follows:
-            </p>
-            <img
-              style="width: 50%; padding-bottom: 2%"
-              src="Images/KG_Architecture.PNG"
-              alt="KGraphX Architecture"
-            />
-          </div>
-          <h2>Main Modules and Components:</h2>
-          <ul>
-            <li>
-              <strong>Core KG Builder:</strong> As the main component of
-              KGraphX, the Core KG Builder provides all the web services for
-              other internal modules. It sends user inputs to the SPARQL Query
-              Generator, receives responses, and collects links and nodes' data
-              for serialization to an RDF store or Turtle files. It is a
-              JavaScript server-side component that runs a customized version of
-              WebVOWL.
-            </li>
-            <li>
-              <strong>SPARQL Query Generator:</strong> Using HTTP requests, the
-              SPARQL Query Generator provides an automatic querying mechanism
-              for KGs on Wikidata and BioPortal based on user search inputs. It
-              allows users to retrieve entities and properties for reusability
-              in the KG User Interface.
-            </li>
-            <li>
-              <strong>RDF Store Fuseki Server:</strong> This server acts as a
-              repository for storing and managing RDF data associated with
-              KGraphX-created KGs. It provides centralized storage, ensuring the
-              persistence and accessibility of ontologies and RDF data. It also
-              exposes SPARQL over HTTP APIs for accessing its services.
-            </li>
-            <li>
-              <strong>Export Module:</strong> With the support of the Export
-              Module, user-developed KGs can be serialized into RDF and RDFS
-              formats. Users have the option to download them as Turtle files or
-              store them in the Fuseki server.
-            </li>
-          </ul>
+<div>
+    <p>
+        The process of manually creating and maintaining knowledge graphs (KGs) can be challenging, especially for large and complex KGs. Popular KGs like Facebook's social graph are created through user interactions instead of manual collaboration.
+    </p>
+
+    <p>
+        Semantic Web technologies such as RDF, RDFS, and OWL are used for KG generation, but they require users to have a solid understanding of these technologies, including their syntax and serialization. Many users lack the necessary skills to implement KGs effectively. Conversion tools like WebVOWL can assist, but a foundational understanding of OWL and Semantic Web technologies is still required.
+    </p>
+    <img
+    style="width: 50%; padding-bottom: 2%"
+    src="Images/movtivationalExample.png"
+    alt="KGraphX Architecture"
+  />
+    <p>
+        The KGraphX approach aims to simplify KG creation for users across different domains. It uses natural language terms and representations to make the process more intuitive. Complexities like prefixes, semantic and schema terminologies, and language tags are eliminated, focusing on simplified natural language properties.
+    </p>
+
+    <p>
+        To construct KGs efficiently, it is recommended to reuse existing entities from external data sources like Wikidata, BioPortal, or DBpedia to avoid duplication and maintain consistency. However, novice users may struggle with the complexities of importing entities. KGraphX addresses this by removing Semantic Web complexities and providing new standards and practices suitable for novices.
+    </p>
+
+    <p>
+        The KGraphX framework builds upon previous KG building approaches and tools designed for novice users. It is based on WebVOWL and introduces customizations to enhance user-friendliness. It incorporates visually appealing elements based on natural language and automates querying of KGs on Wikidata and BioPortal. Users can export their generated KGs into RDF and RDFS formats, with the option to store them in a local RDF storage server like Apache Jena Fuseki Server.
+    </p>
+</div>
+      </div>
+      <div id="Architecture"></div>
+      <div id="Architecture">
+        <h2><u>KGraphX Architecture:</u></h2>
+        <div>
+          <p style="font-size: 16px; text-align: justify">
+            The architecture of KGraphX, consists of several modules and
+            components designed to serve as a Streamlined Visual KG Builder
+            specifically tailored for novice users. The main modules and
+            components are as follows:
+          </p>
+          <img
+            style="width: 50%; padding-bottom: 2%"
+            src="Images/KG_Architecture.PNG"
+            alt="KGraphX Architecture"
+          />
+        </div>
+        <h2>Main Modules and Components:</h2>
+        <ul>
+          <li>
+            <strong>Core KG Builder:</strong> As the main component of KGraphX,
+            the Core KG Builder provides all the web services for other internal
+            modules. It sends user inputs to the SPARQL Query Generator,
+            receives responses, and collects links and nodes' data for
+            serialization to an RDF store or Turtle files. It is a JavaScript
+            server-side component that runs a customized version of WebVOWL.
+          </li>
+          <li>
+            <strong>SPARQL Query Generator:</strong> Using HTTP requests, the
+            SPARQL Query Generator provides an automatic querying mechanism for
+            KGs on Wikidata and BioPortal based on user search inputs. It allows
+            users to retrieve entities and properties for reusability in the KG
+            User Interface.
+          </li>
+          <li>
+            <strong>RDF Store Fuseki Server:</strong> This server acts as a
+            repository for storing and managing RDF data associated with
+            KGraphX-created KGs. It provides centralized storage, ensuring the
+            persistence and accessibility of ontologies and RDF data. It also
+            exposes SPARQL over HTTP APIs for accessing its services.
+          </li>
+          <li>
+            <strong>Export Module:</strong> With the support of the Export
+            Module, user-developed KGs can be serialized into RDF and RDFS
+            formats. Users have the option to download them as Turtle files or
+            store them in the Fuseki server.
+          </li>
+        </ul>
+      </div>
+      <div id="Features">
+        <h2><u>Features:</u></h2>
+        <div>
+          <h3>Visual Elements</h3>
+          <p>
+            KGraphX focuses on making it easier for lay users to understand
+            and use the tool for knowledge graph creation. It uses visual
+            elements to represent different categories: Resource, Property, and
+            Datatype. Each element is depicted with a symbol and a natural
+            language term, making it more understandable for lay users.
+          </p>
+          <img
+          style="width: 35%; padding-bottom: 2%"
+          src="Images/visual.png"
+          alt="Visual Elements"
+        />
+
+          <h3>Building the Knowledge Graph</h3>
+          <p>
+            Resources can be created using the drag and drop approach. Users can
+            search for entities in Wikidata or Bioportal and create new
+            entities. The graph building process can be done with or without the
+            force layout enabled. Relations between entities can be established
+            by dragging the arrowhead to the target element. Two types of
+            properties, HasRelation and isTypeOf, can be used for creating
+            relations. Users can also reuse existing properties from Wikidata to
+            create relationships between resources.
+          </p>
+          <img
+          style="width: 70%; padding-bottom: 2%"
+          src="Images/KGraphX_Interface.png"
+          alt="KGraphX UI"
+        />
+          <h4>Wikidata and Bioportal Integration</h4>
+          <h5>Wikidata</h5>
+          
+            KGraphX integrates with Wikidata using its API. Users can get
+            search suggestions and populate existing properties of an entity by
+            invoking the Wikidata API with corresponding SPARQL queries.
+          
+          <h5>Bioportal</h5>
+          <p>
+            Bioportal integration requires an API key. Users can search for
+            entities and select the required entity to build the graph. The
+            resource node will be populated with the label name, and the IRI
+            value takes the URL value.
+          </p>
+
+          <h4>Export Module</h4>
+          <p>
+            KGraphX provides an export module for serializing the constructed
+            graph into RDF and RDF-Syntax (RDF-S) formats. Users can select the
+            export option, and the content will be prepared in steps to create
+            the header, prefixes, and required syntax formats. The exported file
+            can be downloaded as a TTL format file.
+          </p>
+          <img
+          style="width: 35%; padding-bottom: 2%"
+          src="Images/exportFlowchart.png"
+          alt="Export Module"
+        />
+
+          <h4>Apache Jena Fuseki Integration</h4>
+          <p>
+            KGraphX integrates with Apache Jena Fuseki, which acts as a
+            repository for storing and managing RDF data associated with
+            KGraphX-created KGs. Users can run the Fuseki server at port 3030
+            and use it as a centralized storage solution for ontologies and RDF
+            data.
+          </p>
+        </div>
+      </div>
+      <div id="Implementation">
+        <h2><u>KGraphX Implementation:</u></h2>
+        <div>
+
         </div>
       </div>
       <div id="Installation">
-        <h2>Requirements</h2>
-        <ul>
-          <li>
-            Node.js for installing the development tools and dependencies from
-            <a href="https://nodejs.org/en">here</a>.
-          </li>
-          <li>
-            Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version 11.
-          </li>
-        </ul>
-        <h2>KGraphX Installation</h2>
-        <ol>
-          <li>Navigate to the root folder.</li>
-          <li>
-            Run <code>npm install --force</code> to install the dependencies and
-            build the project.
-          </li>
-          <li>
-            Run <code>npm install grunt-cli -g</code> to install the npm package
-            <code>grunt-cli</code> globally.
-          </li>
-          <li>
-            Run <code>grunt webserver</code> to start a local live-updating web
-            server.
-          </li>
-        </ol>
-        <h2>Fuseki Server Installation</h2>
-        <ol>
-          <li>
-            You can download the latest version normally under their
-            <a href="https://jena.apache.org/download/index.cgi">website</a> or
-            download Fuseki server with the following command for Linux
-            machines. For Windows, the website has a Windows version
-            <a
-              href="https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.zip"
-              >here</a
-            >:
-          </li>
-          <pre><code>wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz</code></pre>
-          <li>Extract the compressed file.</li>
-          <li>Find the location of "apache-jena-fuseki-4.8.0".</li>
-          <li>Login to the terminal under the extracted folder.</li>
-          <li>Run Fuseki using the following command:</li>
-          <pre><code>./fusekiserver --update --mem --port=3030 /dataset</code></pre>
-          <li>
-            Fuseki server GUI is accessible at
-            <a href="http://localhost:3030/">http://localhost:3030/</a>.
-          </li>
-        </ol>
+        <h2><u>Installation:</u></h2>
+        <div>
+          <h3>Requirements</h3>
+          <ul>
+            <li>
+              Node.js for installing the development tools and dependencies from
+              <a href="https://nodejs.org/en">here</a>.
+            </li>
+            <li>
+              Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version
+              11.
+            </li>
+          </ul>
+          <h3>KGraphX Installation</h3>
+          <ol>
+            <li>Navigate to the root folder.</li>
+            <li>
+              Run <code>npm install --force</code> to install the dependencies
+              and build the project.
+            </li>
+            <li>
+              Run <code>npm install grunt-cli -g</code> to install the npm
+              package <code>grunt-cli</code> globally.
+            </li>
+            <li>
+              Run <code>grunt webserver</code> to start a local live-updating
+              web server.
+            </li>
+          </ol>
+          <h3>Fuseki Server Installation</h3>
+          <ol>
+            <li>
+              You can download the latest version normally under their
+              <a href="https://jena.apache.org/download/index.cgi">website</a>
+              or download Fuseki server with the following command for Linux
+              machines. For Windows, the website has a Windows version
+              <a
+                href="https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.zip"
+                >here</a
+              >:
+            </li>
+            <pre><code>wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz</code></pre>
+            <li>Extract the compressed file.</li>
+            <li>Find the location of "apache-jena-fuseki-4.8.0".</li>
+            <li>Login to the terminal under the extracted folder.</li>
+            <li>Run Fuseki using the following command:</li>
+            <pre><code>./fusekiserver --update --mem --port=3030 /dataset</code></pre>
+            <li>
+              Fuseki server GUI is accessible at
+              <a href="http://localhost:3030/">http://localhost:3030/</a>.
+            </li>
+          </ol>
+        </div>
       </div>
       <div id="FAQ">
         <h2><u>Frequently Asked Questions for Tool's Usage:</u></h2>
