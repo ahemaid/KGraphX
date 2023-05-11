@@ -5,11 +5,19 @@
   <br>
 </h1>
 
-=======
+<p align="center">
+  <a href="mailto:ahmad.hemid@fit.fraunhofer.de">Contact</a> •
+  <a href="#contributing">Contribute</a> •
+<!--   <a href="https://international-data-spaces-association.github.io/IDS-AppStore/">Docs</a> • -->
+  <a href="https://github.com/ahemaid/KGraphX/issues">Issues</a> •
+  <a href="#license">License</a>
+</p>
+
+
 KGraphX, an easy-to-use visual editor to make knowledge graph creation
 for users with limited knowledge of Semantic Web technology more engaging.
 
-Base used : [WebVOWL](http://vowl.visualdataweb.org/webvowl.html)
+Built on the top of [WebVOWL](http://vowl.visualdataweb.org/webvowl.html)
 
 Requirements
 ------------
@@ -40,5 +48,11 @@ wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 ```
 6. Fuseki server GUI is accessible at http://localhost:3030/
 
-Contributing
+<!-- **Contact FTeam**: ids-appstore@fit.fraunhofer.de
+ -->
+## License
+Copyright © 2023 Fraunhofer. This project is licensed under the MIT License - see the
+[LICENSE](LICENSE) for details.
+
+## Contributing
 You are very welcome to contribute to this project when you find a bug, want to suggest an improvement, or have an idea for a useful feature. Please find a set of guidelines at the CONTRIBUTING.md and the CODE_OF_CONDUCT.md.
