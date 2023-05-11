@@ -23,7 +23,8 @@ Fuseki Server setup
 -----------------
 1. Download Fuseki server with the following command: 
 ```
-wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz ```
+wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
+```
 or you can download the latest version normally 
 from their page at https://jena.apache.org/download/index.cgi.
 2. Extract the compressed file. 
@@ -31,6 +32,6 @@ from their page at https://jena.apache.org/download/index.cgi.
 7. Login to the terminal under the extracted folder. 
 8. Run Fuseki, use the following command:
 ```
-./fusekiserver --update --mem --port=3030 /dataset```
-
+./fusekiserver --update --mem --port=3030 /dataset
+```
 9 Fuseki server GUI is accessible at http://localhost:3030/ 
