@@ -1,4 +1,10 @@
-KGraphX 
+
+<h1 align="center">
+  <br>
+      KGraphX
+  <br>
+</h1>
+
 =======
 KGraphX, an easy-to-use visual editor to make knowledge graph creation
 for users with limited knowledge of Semantic Web technology more engaging.
@@ -33,3 +39,6 @@ wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 ./fusekiserver --update --mem --port=3030 /dataset
 ```
 6. Fuseki server GUI is accessible at http://localhost:3030/
+
+Contributing
+You are very welcome to contribute to this project when you find a bug, want to suggest an improvement, or have an idea for a useful feature. Please find a set of guidelines at the CONTRIBUTING.md and the CODE_OF_CONDUCT.md.
