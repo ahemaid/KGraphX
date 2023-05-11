@@ -8,7 +8,7 @@
 <p align="center">
   <a href="mailto:ahmad.hemid@fit.fraunhofer.de">Contact</a> •
   <a href="#contributing">Contribute</a> •
-<!--   <a href="https://international-data-spaces-association.github.io/IDS-AppStore/">Docs</a> • -->
+<a href="https://ahemaid.github.io/KGraphX/">Docs</a> 
   <a href="https://github.com/ahemaid/KGraphX/issues">Issues</a> •
   <a href="#license">License</a>
 </p>
