@@ -3,7 +3,7 @@ KGraphX
 KGraphX, an easy-to-use visual editor to make knowledge graph creation
 for users with limited knowledge of Semantic Web technology more engaging.
 
-Base used : http://vowl.visualdataweb.org/webvowl.html
+Base used : [WebVOWL](http://vowl.visualdataweb.org/webvowl.html)
 
 Requirements
 ------------
