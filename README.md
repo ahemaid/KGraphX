@@ -21,7 +21,7 @@ KGraphX Installation
 
 Fuseki Server Installation
 -----------------
-1. you can download the latest version normally under their [website](https://jena.apache.org/download/index.cgi) or download Fuseki server with the following command: 
+1. You can download the latest version normally under their [website](https://jena.apache.org/download/index.cgi) or download Fuseki server with the following command for Linux machines: 
 ```
 wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 ```
