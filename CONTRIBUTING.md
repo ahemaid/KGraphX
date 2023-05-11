@@ -1,4 +1,4 @@
-# Contributing to the KGraphX
+# Contributing to KGraphX
 
 The following is a set of guidelines for contributing to KGraphX. This is an ongoing
 project of the [Fraunhofer FIT](https://www.fit.fraunhofer.de/en.html) hosted on
