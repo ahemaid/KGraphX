@@ -1,8 +1,8 @@
-# Contributing to the IDS AppStore
+# Contributing to the KGraphX
 
-The following is a set of guidelines for contributing to the IDS AppStore. This is an ongoing
+The following is a set of guidelines for contributing to KGraphX. This is an ongoing
 project of the [Fraunhofer FIT](https://www.fit.fraunhofer.de/en.html) hosted on
-[GitHub](https://github.com/International-Data-Spaces-Association/IDS-AppStore). You are very
+[GitHub](https://github.com/ahemaid/KGraphX/). You are very
 welcome to contribute to this project when you find a bug, want to suggest an improvement, or have
 an idea for a useful feature. For this, always create an issue, a corresponding branch, and open a
 pull request, and follow our style guides as described below.
