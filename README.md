@@ -22,7 +22,7 @@ KGraphX setup
 Fuseki Server setup
 -----------------
 1. Download Fuseki server with the following command: 
-wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki3.16.0.tar.gz or you can download the latest version normally 
+wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz or you can download the latest version normally 
 from their page at https://jena.apache.org/download/index.cgi.
 2. Extract the compressed file. 
 3. Find location of “apache-jena-fuseki-3.16” which is normally in Home folder (Linux Home) . 
