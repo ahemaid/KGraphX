@@ -7,7 +7,7 @@ Base used : http://vowl.visualdataweb.org/webvowl.html
 
 Requirements
 ------------
-Node.js for installing the development tools and dependencies form (here)[https://nodejs.org/en].
+Node.js for installing the development tools and dependencies form [here](https://nodejs.org/en).
 
 Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version 11.
 
