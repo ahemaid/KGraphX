@@ -8,7 +8,8 @@ Base used : http://vowl.visualdataweb.org/webvowl.html
 Requirements
 ------------
 Node.js for installing the development tools and dependencies.
-Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version 11 
+
+Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version 11.
 
 KGraphX setup
 -----------------
