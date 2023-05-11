@@ -376,6 +376,19 @@ ______________________*/
         margin-left: auto;
         margin-right: auto;
       }
+
+              table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
     <link rel="icon" href="favicon.ico" type="image/x-icon" />
     <title>KGraphX Docs</title>
@@ -549,7 +562,7 @@ ______________________*/
           <h4>Export Module</h4>
           <p>
             KGraphX provides an export module for serializing the constructed
-            graph into RDF and RDF-Syntax (RDF-S) formats. Users can select the
+            graph into RDF and RDFS formats. Users can select the
             export option, and the content will be prepared in steps to create
             the header, prefixes, and required syntax formats. The exported file
             can be downloaded as a TTL format file.
@@ -573,7 +586,106 @@ ______________________*/
       <div id="Implementation">
         <h2><u>KGraphX Implementation:</u></h2>
         <div>
-
+            <h3>Graph building module</h3>
+            <p>
+                This section explains basic graph building without using the search functionalities. The graph building module has been reused from WebVOWL and is extended as per the required modifications. The entire canvas area which is used for creating the graph is set to allow the drag and drop functionality using the method <em>allowDrop(event)</em> and invoking the method through the <em>ondragover</em> attribute in the canvas section. Each of the elements in the left side section is added as SVG elements as shown in the table below:
+            </p>
+        
+            <table>
+                <tr>
+                    <th>Elements</th>
+                    <th>SVG elements used</th>
+                </tr>
+                <tr>
+                    <td>Resource</td>
+                    <td>&lt;circle&gt;, &lt;text&gt;</td>
+                </tr>
+                <tr>
+                    <td>HasRelation</td>
+                    <td>&lt;rect&gt;, &lt;marker&gt;, &lt;line&gt;, &lt;path&gt;, &lt;text&gt;</td>
+                </tr>
+                <tr>
+                    <td>isTypeOf</td>
+                    <td>&lt;line&gt;, &lt;marker&gt;, &lt;text&gt;, &lt;path&gt;</td>
+                </tr>
+                <tr>
+                    <td>All datatype elements</td>
+                    <td>&lt;rect&gt;, &lt;text&gt;</td>
+                </tr>
+            </table>
+        
+            <p>
+                The resource element is incorporated with drag functionality and upon drag start, the function <em>selectThisDefaultElement(this)</em> is invoked to set the currently created resource as the selection. Upon dropping the resource on the graph area, the method <em>modified_dblClickFunction()</em> is invoked which gets the position of the drop (x coordinate, y coordinate, translation, and scale factor) and creates a new node at the given location with the label "NewResource" and an IRI of ":NewResource + enum value of the resource".
+            </p>
+        
+            <p>
+                Each Resource node in the graph is incorporated with the following functionalities that appear upon hovering over the node:
+            </p>
+            <ol>
+                <li>'+' : upon clicking adds the selected datatype element from the left side section.</li>
+                <li>'x' : upon clicking deletes the node.</li>
+                <li>An arrow drag option that can be clicked and dragged to the other node with which a connection can be established.</li>
+            </ol>
+        
+            <p>
+                Upon arrow drag start, the x and y coordinates of the corresponding node are noted, and on dragend event, the coordinates are considered as the target position, and the <em>createNewObjectProperty</em> function is invoked by passing the domain, range, and arrow end position. The algorithm for establishing the link is given below:
+            </p>
+        
+            <pre>
+            <code>
+         function createNewObjectProperty() {
+            if (selectedProperty === 'HasRelation') {
+                // Set the label as HasRelation
+                // Push the id, domain, range, label, IRI to an array object
+                // Create the HasRelation property editable SVG between the domain and range nodes
+            } else {
+                // Set the label as isTypeOf
+                // Push the id, domain, range, label, IRI to an array object
+                // Create the isTypeOf property editable SVG between the domain and range nodes
+            }
+        }
+            </code>
+            </pre>
+        
+            <h3>Search module</h3>
+            <p>
+                This module focuses on implementing the search functionality in the graph. The search is based on the label or IRI of the nodes. The user enters a keyword in the search input field, and upon clicking the search button, the function <em>searchFunction()</em> is invoked. The algorithm for the search functionality is as follows:
+            </p>
+        
+            <pre>
+            <code>
+        function searchFunction() {
+            let searchInput = document.getElementById('searchInput').value;
+            let searchResults = [];
+        
+            // Iterate over all nodes in the graph
+            // Check if the label or IRI matches the search input
+            // If yes, push the node to the searchResults array
+        
+            // Highlight the searchResults nodes in the graph
+        }
+            </code>
+            </pre>
+        
+            <h3>Layout module</h3>
+            <p>
+                This module focuses on arranging the nodes in the graph to achieve an aesthetically pleasing layout. The algorithm used is a force-directed layout algorithm, which simulates the forces between nodes and iteratively adjusts their positions to achieve equilibrium. The layout algorithm is as follows:
+            </p>
+        
+            <pre>
+            <code>
+        function layoutAlgorithm() {
+            // Initialize the positions of all nodes randomly
+            // Set up a simulation with parameters like repulsion force, attraction force, and damping
+        
+            // Iterate for a certain number of iterations or until the system reaches equilibrium
+            // Calculate the forces between nodes based on their positions and properties
+            // Update the positions of nodes based on the forces
+        
+            // Update the positions of SVG elements in the graph based on the updated node positions
+        }
+            </code>
+            </pre>
         </div>
       </div>
       <div id="Installation">
@@ -632,104 +744,64 @@ ______________________*/
         </div>
       </div>
       <div id="FAQ">
-        <h2><u>Frequently Asked Questions for Tool's Usage:</u></h2>
+        <h2><u>Frequently Asked Questions for KGraphX Usage:</u></h2>
         <div>
           <div>
-            <b style="font-size: 16px"
-              >1. Selecting the required data store for search</b
-            >
+            <b style="font-size: 16px">1. Selecting the required data store for search</b>
           </div>
           <ul>
-            <li>
-              Select Wikidata or Bioportal from the dropdown in the left side
-              bar
-            </li>
+            <li>Select Wikidata or Bioportal from the dropdown in the left sidebar</li>
           </ul>
-          <img
-            style="width: 25%; padding-bottom: 2%"
-            src="Images/dropdown.PNG"
-            alt="Datastore selection"
-          />
+          <img style="width: 25%; padding-bottom: 2%" src="Images/dropdown.PNG" alt="Datastore selection" />
         </div>
         <div>
           <div>
-            <b style="font-size: 16px"
-              >2. How do I create a resource and search for existing elements
-              from the selected datastore?</b
-            >
+            <b style="font-size: 16px">2. How do I create a resource and search for existing elements from the selected datastore?</b>
           </div>
           <ul>
-            <li>Drag and drop a resource from the left side bar</li>
+            <li>Drag and drop a resource from the left sidebar</li>
             <li>Double click on the element</li>
             <li>Type inside the search box</li>
-            <li>
-              Select an element from the search results and you can find the
-              results under Property details on the right side
-            </li>
+            <li>Select an element from the search results and you can find the results under Property details on the right side</li>
           </ul>
-          <img
-            style="padding-bottom: 2%"
-            src="Images/Resource.gif"
-            alt="Resource creation"
-          />
+          <img style="padding-bottom: 2%" src="Images/Resource.gif" alt="Resource creation" />
         </div>
         <div>
           <div>
             <b style="font-size: 16px">3. How do I create a new entity?</b>
           </div>
           <ul>
-            <li>Drag and drop a resource from the left side bar</li>
+            <li>Drag and drop a resource from the left sidebar</li>
             <li>Double click on the element</li>
             <li>Type the name you would like to add to the new entity</li>
-            <li>Click on the 'create new entity' button</li>
+            <li>Click on the "create new entity" button</li>
           </ul>
         </div>
         <div>
           <div>
-            <b style="font-size: 16px"
-              >4. How to find existing properties between 2 entities?</b
-            >
+            <b style="font-size: 16px">4. How to find existing properties between 2 entities?</b>
           </div>
           <ul>
-            <li>
-              Create 2 resources and connect them with the 'hasRelation'
-              property
-            </li>
+            <li>Create 2 resources and connect them with the "hasRelation" property</li>
             <li>Double click on the property box</li>
-            <li>
-              Any existing relation between the entities will be displayed in
-              the pop up else create a new property using the 'Create new
-              property' button
-            </li>
+            <li>Any existing relation between the entities will be displayed in the pop-up else create a new property using the "Create new property" button</li>
           </ul>
         </div>
         <div>
           <div>
-            <b style="font-size: 16px">5. How to export ttl as RDF/RDF-S?</b>
+            <b style="font-size: 16px">5. How to export ttl as RDF/RDFS?</b>
           </div>
           <ul>
-            <li>
-              Once the graph is constructed, select the option of 'Export as
-              RDF' or 'Export as RDFS' under the Export/Save tab in the footer.
-            </li>
+            <li>Once the graph is constructed, select the option of "Export as RDF" or "Export as RDFS" under the Export/Save tab in the footer.</li>
           </ul>
         </div>
         <div>
           <div>
-            <b style="font-size: 16px"
-              >6. How to add the graph or ttl to Apache Jena Fuseki server?</b
-            >
+            <b style="font-size: 16px">6. How to add the graph or ttl to Apache Jena Fuseki server?</b>
           </div>
           <ul>
-            <li>
-              Once the graph is contructed, if you directly wish to upload the
-              current graph, select 'Upload current graph to Fuseki' by entering
-              the dataset name on your Fuseki server.
-            </li>
-            <li>
-              If you wish to upload a ttl file, select 'Upload TTL file to
-              Fuseki' by entering the dataset name on your Fuseki server.
-            </li>
+            <li>Once the graph is constructed, if you directly wish to upload the current graph, select "Upload current graph to Fuseki" by entering the dataset name on your Fuseki server.</li>
+            <li>If you wish to upload a ttl file, select "Upload TTL file to Fuseki" by entering the dataset name on your Fuseki server.</li>
           </ul>
         </div>
       </div>
