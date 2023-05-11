@@ -26,7 +26,6 @@ Fuseki Server Installation
 wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 ```
 or you can download the latest version normally under their [website](https://jena.apache.org/download/index.cgi\).
-
 2. Extract the compressed file. 
 3. Find location of “apache-jena-fuseki-4.8.0”. 
 4. Login to the terminal under the extracted folder. 
