@@ -14,8 +14,8 @@
 </p>
 
 
-KGraphX, an easy-to-use visual editor to make knowledge graph creation
-for users with limited knowledge of Semantic Web technology more engaging.
+KGraphX, an easy-to-use visual editor to facilitate knowledge graph creation
+for users with limited knowledge of Semantic Web technology.
 
 Built on the top of [WebVOWL](http://vowl.visualdataweb.org/webvowl.html)
 
