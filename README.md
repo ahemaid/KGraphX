@@ -54,7 +54,7 @@ wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
  
 Running Using Docker
 -----------------
-1. You can also run KGraphX using docker, If you have it installed on your machine, otherwise, you can [this](https://docs.docker.com/engine/install/) to install docker. Once you have docker, then you can issue the following command to download the KGraphX docker image:
+1. You can also run KGraphX using docker, If you have it installed on your machine, otherwise, you use [this](https://docs.docker.com/engine/install/) to install docker. Once you have docker, then you can issue the following command to download the KGraphX docker image:
 ```
 docker pull ahemid/kgraphx
 ```
