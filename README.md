@@ -31,6 +31,7 @@ KGraphX Installation
 2. Run `npm install --force` to install the dependencies and build the project
 3. Run `npm install grunt-cli -g` (install the npm package `grunt-cli` globally)
 4. Run `grunt webserver` starts a local live-updating webserver
+5. Then, KGraphX GUI is accessible at http://localhost:8000/
 
 
 Fuseki Server Installation
@@ -50,6 +51,19 @@ wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 
 <!-- **Contact FTeam**: ids-appstore@fit.fraunhofer.de
  -->
+ 
+Running Using Docker
+-----------------
+1. You can also run KGraphX using docker, If you have it installed on your machine, otherwise, you can [this](https://docs.docker.com/engine/install/) to install docker. Once you have docker, then you can issue the following command to download the KGraphX docker image:
+```
+docker pull ahemid/kgraphx
+```
+2. Next, Create the kgraphx docker container using the following command: 
+```
+docker run -d -p 8000:8000 -p 3030:3030 ahemid/kgraphx
+```
+3. Then, KGraphX GUI is accessible at http://localhost:8000/ and Fuseki server is running at http://localhost:3030/
+ 
 ## License
 Copyright © 2023 Fraunhofer. This project is licensed under the MIT License - see the
 [LICENSE](LICENSE) for details.
