@@ -58,7 +58,11 @@ Running Using Docker
 ```
 docker pull ahemid/kgraphx
 ```
-2. Next, Create the kgraphx docker container using the following command: 
+or you can create KGraphX docker image by giving the following command on the project root folder:
+```
+docker build .  -t ahemid/kgraphx
+```
+2. Next, create the kgraphx docker container using the following command: 
 ```
 docker run -d -p 8000:8000 -p 3030:3030 ahemid/kgraphx
 ```
