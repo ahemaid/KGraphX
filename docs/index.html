@@ -492,7 +492,7 @@ ______________________*/
         <h2><u>KGraphX Architecture:</u></h2>
         <div>
           <p style="font-size: 16px; text-align: justify">
-            The architecture of KGraphX, consists of several modules and
+            The architecture of KGraphX consists of several modules and
             components designed to serve as a Streamlined Visual KG Builder
             specifically tailored for novice users. The main modules and
             components are as follows:
@@ -554,7 +554,7 @@ ______________________*/
 
           <h3>Building the Knowledge Graph</h3>
           <p>
-            Resources can be created using the drag and drop approach. Users can
+            Resources can be created using the drag-and-drop approach. Users can
             search for entities in Wikidata or Bioportal and create new
             entities. The graph building process can be done with or without the
             force layout enabled. Relations between entities can be established
@@ -614,9 +614,9 @@ ______________________*/
           <p>
             This section explains basic graph building without using the search
             functionalities. The graph building module has been reused from
-            WebVOWL and is extended as per the required modifications. The
+            WebVOWL is extended as per the required modifications. The
             entire canvas area which is used for creating the graph is set to
-            allow the drag and drop functionality using the method
+            allow the drag-and-drop functionality using the method
             <em>allowDrop(event)</em> and invoking the method through the
             <em>ondragover</em> attribute in the canvas section. Each of the
             elements in the left side section is added as SVG elements as shown
@@ -680,7 +680,7 @@ ______________________*/
 
           <p>
             Upon arrow drag start, the x and y coordinates of the corresponding
-            node are noted, and on dragend event, the coordinates are considered
+            node is noted, and on dragged event, the coordinates are considered
             as the target position, and the
             <em>createNewObjectProperty</em> function is invoked by passing the
             domain, range, and arrow end position. The algorithm for
@@ -692,11 +692,11 @@ ______________________*/
          function createNewObjectProperty() {
             if (selectedProperty === 'HasRelation') {
                 // Set the label as HasRelation
-                // Push the id, domain, range, label, IRI to an array object
+                // Push the id, domain, range, label, and IRI to an array object
                 // Create the HasRelation property editable SVG between the domain and range nodes
             } else {
                 // Set the label as isTypeOf
-                // Push the id, domain, range, label, IRI to an array object
+                // Push the id, domain, range, label, and IRI to an array object
                 // Create the isTypeOf property editable SVG between the domain and range nodes
             }
         }
@@ -791,7 +791,7 @@ ______________________*/
               <strong>Get Resource and Property data:</strong> For the graph
               drawn, the node and link details are fetched and the data is
               stored in an object. This provides all the required data regarding
-              the resources and properties drawn in the graph in two separate
+              the resources and properties have been drawn in the graph in two separate
               objects, which can be used to construct the required
               serializations.
             </li>
@@ -852,7 +852,7 @@ ______________________*/
             <li>
               You can download the latest version normally under their
               <a href="https://jena.apache.org/download/index.cgi">website</a>
-              or download Fuseki server with the following command for Linux
+              or download the Fuseki server with the following command for Linux
               machines. For Windows, the website has a Windows version
               <a
                 href="https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.zip"
@@ -945,19 +945,19 @@ ______________________*/
         </div>
         <div>
           <div>
-            <b style="font-size: 16px">5. How to export ttl as RDF/RDFS?</b>
+            <b style="font-size: 16px"> 5. How to export TTL as RDF/RDFS?</b>
           </div>
           <ul>
             <li>
               Once the graph is constructed, select the option of "Export as
-              RDF" or "Export as RDFS" under the Export/Save tab in the footer.
+RDF" or "Export as RDFS" under the Export/Save tab in the footer.
             </li>
           </ul>
         </div>
         <div>
           <div>
             <b style="font-size: 16px"
-              >6. How to add the graph or TTL to Apache Jena Fuseki server?</b
+              > 6. How to add the graph or TTL to Apache Jena Fuseki server?</b
             >
           </div>
           <ul>
