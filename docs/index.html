@@ -866,8 +866,26 @@ ______________________*/
             <li>Run Fuseki using the following command:</li>
             <pre><code>./fusekiserver --update --mem --port=3030 /dataset</code></pre>
             <li>
-              Fuseki server GUI is accessible at
-              <a href="http://localhost:3030/">http://localhost:3030/</a>.
+              Fuseki server GUI is accessible at 
+              <a href="http://localhost:3030/">http://localhost:3030/</a>  and as a default "dataset" will be used. Please remember to use it when exporting RDF/RDFS to the Fuseki server..
+            </li>
+          </ol>
+          <h3>Running Using Docker</h3>
+          <ol>
+            <li>
+              You can also run KGraphX using docker, If you have it installed on your machine, otherwise, you use 
+              <a
+              href="https://docs.docker.com/engine/install/"
+              >this</a>
+               to install docker. Once you have docker, then you can issue the following command to download the KGraphX docker image:
+            </li>
+            <pre><code>docker pull ahemid/kgraphx</code></pre>
+            or you can create KGraphX docker image by giving the following command on the project root folder:
+            <pre><code>docker build .  -t ahemid/kgraphx</code></pre>
+            <li>Next, create the KGraphX docker container using the following command:
+              <pre><code>docker run -d -p 8000:8000 -p 3030:3030 ahemid/kgraphx </code></pre>
+            </li>
+            <li>Then, KGraphX GUI is accessible at <a href="http://localhost:8000/">http://localhost:8000/</a> and the Fuseki server is running at <a href="http://localhost:3030/">http://localhost:3030/</a> 
             </li>
           </ol>
         </div>
