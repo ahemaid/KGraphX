@@ -27,16 +27,16 @@ Java Runtime Kit (JRE) or Java Development Kit (JDK) >= version 11.
 
 KGraphX Installation
 -----------------
-1. Navigate to the root folder.
+1. Navigate to the root folder
 2. Run `npm install --force` to install the dependencies and build the project
 3. Run `npm install grunt-cli -g` (install the npm package `grunt-cli` globally)
-4. Run `grunt webserver` starts a local live-updating webserver
+4. Run `grunt webserver` to start a local live-updating webserver
 5. Then, KGraphX GUI is accessible at http://localhost:8000/
 
 
 Fuseki Server Installation
 -----------------
-1. You can download the latest version normally under their [website](https://jena.apache.org/download/index.cgi) or download Fuseki server with the following command for Linux machines. For Windows, the website has a Windows version [here](https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.zip) : 
+1. You can download the latest version normally under their [website](https://jena.apache.org/download/index.cgi) or download the Fuseki server with the following command for Linux machines. For Windows, the website has a Windows version [here](https://dlcdn.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.zip) : 
 ```
 wget https://downloads.apache.org/jena/binaries/apache-jena-fuseki-4.8.0.tar.gz
 ```
